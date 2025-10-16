@@ -1,0 +1,75 @@
+package br.com.thiagosantos.cinerate.entities;
+
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "usuario")
+public class Usuario {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idusuario")
+    private Long idUsuario;
+    @Column(name = "nome", nullable = false)
+    private String nome;
+    @Column(name = "email", nullable = false)
+    private String email;
+    @Column(name = "senha", nullable = false)
+    private String senha;
+    @Column(name = "dataDeCadastro", columnDefinition = "current_timestamp")
+    private LocalDateTime dataDeCadastro;
+
+
+    public Usuario(){
+
+    }
+
+    public Usuario(Long idUsuario, String nome, String email, String senha, LocalDateTime dataDeCadastro) {
+        this.idUsuario = idUsuario;
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.dataDeCadastro = dataDeCadastro;
+    }
+
+    public Long getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public LocalDateTime getDataDeCadastro() {
+        return dataDeCadastro;
+    }
+
+    public void setDataDeCadastro(LocalDateTime dataDeCadastro) {
+        this.dataDeCadastro = dataDeCadastro;
+    }
+}
