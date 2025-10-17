@@ -1,6 +1,6 @@
 package br.com.thiagosantos.cinerate.controller;
 
-import br.com.thiagosantos.cinerate.dto.UsuarioDTO;
+
 import br.com.thiagosantos.cinerate.entities.Usuario;
 import br.com.thiagosantos.cinerate.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
