@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class UsuarioService {
@@ -20,5 +21,8 @@ public class UsuarioService {
         u.setEmail(senha);
         u.setDataDeCadastro(LocalDateTime.now());
         return this.usuarioRepository.save(u);
+    }
+    public List<Usuario> listarUsuario(){
+        return this.usuarioRepository.findAll();
     }
 }
