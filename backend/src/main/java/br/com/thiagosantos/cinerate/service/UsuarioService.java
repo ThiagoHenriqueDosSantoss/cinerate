@@ -13,11 +13,11 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public Usuario criarUsuario(UsuarioDTO dto){
+    public Usuario criarUsuario(String nome, String email, String senha){
         Usuario u = new Usuario();
-        u.setNome(dto.getNome());
-        u.setSenha(dto.getSenha());
-        u.setEmail(dto.getEmail());
+        u.setNome(nome);
+        u.setSenha(email);
+        u.setEmail(senha);
         u.setDataDeCadastro(LocalDateTime.now());
         return this.usuarioRepository.save(u);
     }
