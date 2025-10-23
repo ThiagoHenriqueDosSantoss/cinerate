@@ -22,12 +22,10 @@ public class Avaliacao {
 
     @ManyToOne
     @JoinColumn(name = "usuario", referencedColumnName = "idusuario")
-    @Column(name = "idusuario")
     private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "obra", referencedColumnName = "idobra")
-    @Column(name = "idobra")
     private Obra obra;
 
     public Avaliacao(){

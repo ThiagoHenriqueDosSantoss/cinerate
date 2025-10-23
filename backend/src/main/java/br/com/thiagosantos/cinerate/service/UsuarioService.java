@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioService {
@@ -26,5 +27,24 @@ public class UsuarioService {
     }
     public List<Usuario> listarUsuario(){
         return this.usuarioRepository.findAll();
+    }
+
+    public Usuario atualizarUsuario(Long idusuario, Usuario usuario){
+        Usuario u = new Usuario();
+        Optional<Usuario> usuarioOptional = usuarioRepository.findById(idusuario);
+        usuarioOptional.get();
+
+        if(usuario.getNome() != null){
+            u.setNome(usuario.getNome());
+        }
+        if (usuario.getSenha()!= null){
+            String senhaHash = CriptografiaUtil.gerarHash(usuario.getSenha());
+            u.setSenha(senhaHash);
+
+        }
+        if(usuario.getEmail() != null){
+            u.setEmail(usuario.getEmail());
+        }
+        return this.usuarioRepository.save(u);
     }
 }
