@@ -1,0 +1,36 @@
+* {
+    /*
+        Estilização de botoes
+    */
+    --p-button-primary-color:white;
+    --p-button-primary-background:blue;
+    --p-button-primary-border-color:blue;
+    --p-button-primary-hover-background: blue;
+
+    --p-button-primary-hover-color:black;
+}
+.topContent{
+    display: flex;
+    justify-content: end;
+}
+.usuarios-container {
+  background-color: #f5f5f5; /* fundo claro */
+  min-height: 80vh;           /* ocupa quase toda a tela */
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.usuarios-table {
+  margin-top: 30px;
+  padding-top: 1rem;
+  background-color: #ffffff;  /* tabela branca */
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.p-fluid{
+    background-color: #f5f5f5; /* fundo claro */
+    min-height: 30vh;           /* ocupa quase toda a tela */
+    border-radius: 8px;
+    padding: 2rem;
+}

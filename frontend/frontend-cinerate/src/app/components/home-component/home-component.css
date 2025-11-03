@@ -1,8 +1,8 @@
 .card {
   display: flex;
-  justify-content: center; /* centraliza horizontalmente */
-  align-items: center;     /* centraliza verticalmente, se tiver altura */
-  height: 50px;           /* opcional */
+  justify-content: center;
+  align-items: center;
+  height: 70px;
 }
 
 .items {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 //Imports do primeng
 import { MenubarModule } from 'primeng/menubar';
@@ -8,7 +9,7 @@ import { MenuItem } from 'primeng/api';
 @Component({
   selector: 'app-home-component',
   standalone: true,
-  imports: [MenubarModule,RouterLink],
+  imports: [MenubarModule,RouterModule],
   templateUrl: './home-component.html',
   styleUrl: './home-component.css',
 })
