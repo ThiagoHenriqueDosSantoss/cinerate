@@ -7,6 +7,8 @@ import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
+import { UsuarioService } from '../../service/usuario-service';
+import { Usuario } from '../../interface/Usuario';
 
 @Component({
   selector: 'app-usuario-component',
@@ -17,19 +19,28 @@ import { InputTextModule } from 'primeng/inputtext';
 export class UsuarioComponent implements OnInit{
   displayModal = false;
 
-  novoUsuario = { nome: '', email: '' , senha: '' };
+  novoUsuario: Usuario = { nome: '', email: '' , senha: '' };
 
   usuarios = [
     { id: 1, nome: 'João Silva', email: 'joao@email.com' },
     { id: 2, nome: 'Maria Souza', email: 'maria@email.com' },
     { id: 3, nome: 'Carlos Oliveira', email: 'carlos@email.com' }
   ];
+  constructor(private usuarioService: UsuarioService){}
 
-    ngOnInit(): void {
+  ngOnInit(): void {
     this.usuarios;
   }
   salvarUsuario() {
-    console.log('Salvando usuário:', this.novoUsuario);
-    this.displayModal = false;
-  }
+  this.usuarioService.salvarUsuarios(this.novoUsuario).subscribe({
+    next: (usuario) => {
+      console.log('Usuário salvo:', usuario);
+      this.displayModal = false; // fecha modal
+      this.novoUsuario = { nome: '', email: '' , senha: ''};
+    },
+    error: (err) => {
+      console.error('Erro ao salvar usuário', err);
+    }
+  });
+}
 }
