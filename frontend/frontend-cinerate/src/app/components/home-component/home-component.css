@@ -1,0 +1,10 @@
+.card {
+  display: flex;
+  justify-content: center; /* centraliza horizontalmente */
+  align-items: center;     /* centraliza verticalmente, se tiver altura */
+  height: 50px;           /* opcional */
+}
+
+.items {
+  width: 20%;              /* define a largura do menubar */
+}
