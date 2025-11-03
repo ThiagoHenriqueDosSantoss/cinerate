@@ -1,6 +1,7 @@
 package br.com.thiagosantos.cinerate.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -16,7 +17,8 @@ public class Usuario {
     private String email;
     @Column(name = "senha", nullable = false, length = 60)
     private String senha;
-    @Column(name = "dataDeCadastro", columnDefinition = "current_timestamp")
+    @Column(name = "dataDeCadastro")
+    @CreationTimestamp
     private LocalDateTime dataDeCadastro;
 
 

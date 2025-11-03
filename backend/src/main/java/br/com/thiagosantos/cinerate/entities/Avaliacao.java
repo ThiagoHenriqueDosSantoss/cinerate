@@ -1,6 +1,7 @@
 package br.com.thiagosantos.cinerate.entities;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -17,7 +18,8 @@ public class Avaliacao {
     @Column(name = "comentario",nullable = false, length = 255)
     private String comentario;
 
-    @Column(name = "dataavaliacao",columnDefinition = "current_timestamp", nullable = true)
+    @Column(name = "dataavaliacao", nullable = true)
+    @CreationTimestamp
     private LocalDateTime dataAvaliacao;
 
     @ManyToOne

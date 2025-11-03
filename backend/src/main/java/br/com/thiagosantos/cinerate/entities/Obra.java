@@ -31,20 +31,20 @@ public class Obra {
 
     @ManyToMany
     @JoinTable(
-            name = "fk_usuario",
+            name = "usuario",
             joinColumns = @JoinColumn(name = "idobra"),
             inverseJoinColumns = @JoinColumn(name = "idusuario")
     )
     private Set<Usuario> usuarios = new HashSet<>();
 
-    @ManyToMany(mappedBy = "generos")
-    private Set<Obra> obras = new HashSet<>();
+    @ManyToMany(mappedBy = "obras")
+    private Set<Genero> genero = new HashSet<>();
 
     public Obra(){
 
     }
 
-    public Obra(Long idobra, String titulo, String descricao, Integer anoLancamento, TipoObraEnum tipoobra, String imagemUrl, Set<Usuario> usuarios, Set<Obra> obra) {
+    public Obra(Long idobra, String titulo, String descricao, Integer anoLancamento, TipoObraEnum tipoobra, String imagemUrl, Set<Usuario> usuarios, Set<Genero> genero) {
         this.idobra = idobra;
         this.titulo = titulo;
         this.descricao = descricao;
@@ -52,7 +52,7 @@ public class Obra {
         this.tipoobra = tipoobra;
         this.imagemUrl = imagemUrl;
         this.usuarios = usuarios;
-        this.obras = obra;
+        this.genero = genero;
     }
 
     public Long getIdObra() {
@@ -111,11 +111,11 @@ public class Obra {
         this.usuarios = usuarios;
     }
 
-    public Set<Obra> getObras() {
-        return obras;
+    public Set<Genero> getGenero() {
+        return genero;
     }
 
-    public void setGenero(Set<Obra> obras) {
-        this.obras = obras;
+    public void setGenero(Set<Genero> genero) {
+        this.genero = genero;
     }
 }
