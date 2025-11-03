@@ -15,22 +15,21 @@ public class Genero {
     @Column(name = "nome", nullable = false,length = 55)
     private String nome;
 
-    @ManyToMany
     @JoinTable(
-            name = "fk_obrao",
-            joinColumns = @JoinColumn(name = "idgenero"),
-            inverseJoinColumns = @JoinColumn(name = "idobra")
+            name = "obra_genero",
+            joinColumns = @JoinColumn(name = "idobra"),
+            inverseJoinColumns = @JoinColumn(name = "idgenero")
     )
-    private Set<Obra> obra = new HashSet<>();
+    private Set<Genero> generos = new HashSet<>();
 
     public Genero() {
 
     }
 
-    public Genero(Long idgenero, String nome, Set<Obra> obra) {
+    public Genero(Long idgenero, String nome, Set<Genero> generos) {
         this.idgenero = idgenero;
         this.nome = nome;
-        this.obra = obra;
+        this.generos = generos;
     }
 
     public Long getIdgenero() {
@@ -49,11 +48,11 @@ public class Genero {
         this.nome = nome;
     }
 
-    public Set<Obra> getObra() {
-        return obra;
+    public Set<Genero> getObra() {
+        return generos;
     }
 
-    public void setObra(Set<Obra> obra) {
-        this.obra = obra;
+    public void setObra(Set<Genero> generos) {
+        this.generos = generos;
     }
 }

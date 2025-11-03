@@ -11,49 +11,53 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping(value = "/api/obra")
 public class ObraController {
 
     @Autowired
     ObraRepository obraRepository;
 
-    @RequestMapping(value = "listar", method = RequestMethod.GET)
+    // LISTAR TODOS
+    @GetMapping("/listarObra")
     public ResponseEntity<List<Obra>> listar() {
         return ResponseEntity.ok((List<Obra>) obraRepository.findAll());
     }
 
-    // localhost:8080/Obra/listar/10
-    @RequestMapping(value = "listar/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Obra> getById(@PathVariable(value = "id") Long id) {
+    // OBTER POR ID
+    @GetMapping("/listarObra/{idobra}")
+    public ResponseEntity<Obra> getById(@PathVariable("idobra") Long id) {
         Optional<Obra> object = obraRepository.findById(id);
-        if (object.isPresent()) {
-            return new ResponseEntity<>(object.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return object.map(ResponseEntity::ok)
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @RequestMapping(value = "novo", method = RequestMethod.POST)
-    public ResponseEntity<Obra> novo(@RequestBody Obra Obra) {
-        return new ResponseEntity<Obra>(obraRepository.save(Obra), HttpStatus.OK);
+    // NOVO
+    @PostMapping("/novaObra")
+    public ResponseEntity<Obra> novo(@RequestBody Obra obra) {
+        return ResponseEntity.ok(obraRepository.save(obra));
     }
 
-    @RequestMapping(value = "remover/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Obra> remover(@PathVariable(value = "id") Long id) {
+    // REMOVER
+    @DeleteMapping("/removerObra/{idobra}")
+    public ResponseEntity<Void> remover(@PathVariable("idobra") Long id) {
         Optional<Obra> object = obraRepository.findById(id);
         if (object.isPresent()) {
             obraRepository.delete(object.get());
-            return new ResponseEntity<>(HttpStatus.OK);
+            return ResponseEntity.ok().build();
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.notFound().build();
     }
 
-    @RequestMapping(value = "atualizar/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Obra> atualizar(@PathVariable(value = "id") Long id,
-                                          Obra novoObra) {
+    // ATUALIZAR
+    @PutMapping("/atualizarObra/{idobra}")
+    public ResponseEntity<Obra> atualizar(@PathVariable("idobra") Long id,
+                                          @RequestBody Obra novoObra) {
         Optional<Obra> object = obraRepository.findById(id);
         if (object.isPresent()) {
-            return new ResponseEntity<>(obraRepository.save(novoObra), HttpStatus.OK);
+            // garante que o ID do objeto atualizado seja o mesmo
+            novoObra.setIdObra(id);
+            return ResponseEntity.ok(obraRepository.save(novoObra));
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.notFound().build();
     }
 }

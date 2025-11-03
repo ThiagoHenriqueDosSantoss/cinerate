@@ -11,47 +11,51 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping(value = "/api/avaliacao")
 public class AvaliacaoController {
     @Autowired
     AvaliacaoRepository avalicaoRepository;
 
-    @RequestMapping(value = "listar", method = RequestMethod.GET)
+    // LISTAR TODOS
+    @GetMapping("/listarAvaliacao")
     public ResponseEntity<List<Avaliacao>> listar() {
         return ResponseEntity.ok((List<Avaliacao>) avalicaoRepository.findAll());
     }
 
-    @RequestMapping(value = "listar/{id}", method = RequestMethod.GET)
-    public ResponseEntity<Avaliacao> getById(@PathVariable(value = "id") Long id) {
+    // OBTER POR ID
+    @GetMapping("/listarAvaliacao/{idavaliacao}")
+    public ResponseEntity<Avaliacao> getById(@PathVariable("id") Long id) {
         Optional<Avaliacao> object = avalicaoRepository.findById(id);
-        if (object.isPresent()) {
-            return new ResponseEntity<>(object.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        return object.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @RequestMapping(value = "novo", method = RequestMethod.POST)
+    // NOVO
+    @PostMapping("/novaAvaliacao")
     public ResponseEntity<Avaliacao> novo(@RequestBody Avaliacao avaliacao) {
-        return new ResponseEntity<Avaliacao>(avalicaoRepository.save(avaliacao), HttpStatus.OK);
+        return ResponseEntity.ok(avalicaoRepository.save(avaliacao));
     }
 
-    @RequestMapping(value = "remover/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<Avaliacao> remover(@PathVariable(value = "id") Long id) {
+    // REMOVER
+    @DeleteMapping("/remover/{id}")
+    public ResponseEntity<Void> remover(@PathVariable("idavaliacao") Long id) {
         Optional<Avaliacao> object = avalicaoRepository.findById(id);
         if (object.isPresent()) {
-            avalicaoRepository.delete(object.get());
-            return new ResponseEntity<>(HttpStatus.OK);
+           avalicaoRepository.delete(object.get());
+            return ResponseEntity.ok().build();
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.notFound().build();
     }
 
-    @RequestMapping(value = "atualizar/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<Avaliacao> atualizar(@PathVariable(value = "id") Long id,
-                                               Avaliacao novaAvaliacao) {
+    // ATUALIZAR
+    @PutMapping("/atualizarAvaliacao/{idavaliacao}")
+    public ResponseEntity<Avaliacao> atualizar(@PathVariable("id") Long id,
+                                               @RequestBody Avaliacao novaAvaliacao) {
         Optional<Avaliacao> object = avalicaoRepository.findById(id);
         if (object.isPresent()) {
-            return new ResponseEntity<>(avalicaoRepository.save(novaAvaliacao), HttpStatus.OK);
+            novaAvaliacao.setIdavaliacao(id); // garante que o ID do objeto atualizado seja o mesmo
+            return ResponseEntity.ok(avalicaoRepository.save(novaAvaliacao));
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return ResponseEntity.notFound().build();
     }
 }

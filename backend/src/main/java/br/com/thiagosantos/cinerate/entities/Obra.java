@@ -11,7 +11,7 @@ import java.util.Set;
 public class Obra {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idObra;
+    private Long idobra;
 
     @Column(name = "titulo", nullable = false,length = 255)
     private String titulo;
@@ -37,35 +37,30 @@ public class Obra {
     )
     private Set<Usuario> usuarios = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "fk_genero",
-            joinColumns = @JoinColumn(name = "idobra"),
-            inverseJoinColumns = @JoinColumn(name = "idgenero")
-    )
-    private Set<Genero> genero = new HashSet<>();
+    @ManyToMany(mappedBy = "generos")
+    private Set<Obra> obras = new HashSet<>();
 
     public Obra(){
 
     }
 
-    public Obra(Long idObra, String titulo, String descricao, Integer anoLancamento, TipoObraEnum tipoobra, String imagemUrl, Set<Usuario> usuarios, Set<Genero> genero) {
-        this.idObra = idObra;
+    public Obra(Long idobra, String titulo, String descricao, Integer anoLancamento, TipoObraEnum tipoobra, String imagemUrl, Set<Usuario> usuarios, Set<Obra> obra) {
+        this.idobra = idobra;
         this.titulo = titulo;
         this.descricao = descricao;
         this.anoLancamento = anoLancamento;
         this.tipoobra = tipoobra;
         this.imagemUrl = imagemUrl;
         this.usuarios = usuarios;
-        this.genero = genero;
+        this.obras = obra;
     }
 
     public Long getIdObra() {
-        return idObra;
+        return idobra;
     }
 
     public void setIdObra(Long idObra) {
-        this.idObra = idObra;
+        this.idobra = idObra;
     }
 
     public String getTitulo() {
@@ -116,11 +111,11 @@ public class Obra {
         this.usuarios = usuarios;
     }
 
-    public Set<Genero> getGenero() {
-        return genero;
+    public Set<Obra> getObras() {
+        return obras;
     }
 
-    public void setGenero(Set<Genero> genero) {
-        this.genero = genero;
+    public void setGenero(Set<Obra> obras) {
+        this.obras = obras;
     }
 }

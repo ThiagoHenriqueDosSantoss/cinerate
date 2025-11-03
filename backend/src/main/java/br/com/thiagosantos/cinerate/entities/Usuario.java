@@ -9,8 +9,7 @@ import java.time.LocalDateTime;
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idusuario")
-    private Long idUsuario;
+    private Long idusuario;
     @Column(name = "nome", nullable = false, length = 60)
     private String nome;
     @Column(name = "email", nullable = false, length = 60)
@@ -26,7 +25,7 @@ public class Usuario {
     }
 
     public Usuario(Long idUsuario, String nome, String email, String senha, LocalDateTime dataDeCadastro) {
-        this.idUsuario = idUsuario;
+        this.idusuario = idUsuario;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -34,11 +33,11 @@ public class Usuario {
     }
 
     public Long getIdUsuario() {
-        return idUsuario;
+        return idusuario;
     }
 
     public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
+        this.idusuario = idUsuario;
     }
 
     public String getNome() {
