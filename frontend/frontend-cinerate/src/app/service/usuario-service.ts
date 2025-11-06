@@ -19,8 +19,12 @@ export class UsuarioService {
     const url = `${this.baseUrl}/api/usuario`;
     return this.http.get<Usuario[]>(url);
   }
-  public atualizarUsuarios(idusuario:number, atualizaUsuarios: Usuario): Observable<Usuario>{
-    const url = `${this.baseUrl}/api/usuario/atualiza/${idusuario}`;
-    return this.http.patch<Usuario>(url, atualizaUsuarios);
+  public atualizarUsuarios(idusuario:number, atualizaUsuarios: Partial<Usuario>): Observable<Usuario>{
+    const url = `${this.baseUrl}/api/usuario/atualizar/${idusuario}`;
+    return this.http.put<Usuario>(url, atualizaUsuarios);
+  }
+  public buscarUsuariosPorID(idUsuario:number): Observable<Usuario>{
+    const url = `${this.baseUrl}/api/usuario/id/${idUsuario}`;
+    return this.http.get<Usuario>(url);
   }
 }

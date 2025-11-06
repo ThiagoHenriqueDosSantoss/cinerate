@@ -30,8 +30,8 @@ public class Usuario {
 
     }
 
-    public Usuario(Long idUsuario, String nome, String email, String senha, LocalDateTime dataDeCadastro) {
-        this.idusuario = idUsuario;
+    public Usuario(Long idusuario, String nome, String email, String senha, LocalDateTime dataDeCadastro) {
+        this.idusuario = idusuario;
         this.nome = nome;
         this.email = email;
         this.senha = senha;
@@ -41,6 +41,11 @@ public class Usuario {
     public Long getIdUsuario() {
         return idusuario;
     }
+
+    public void setIdUsuario(Long idusuario) {
+        this.idusuario = idusuario;
+    }
+
 
     public String getNome() {
         return nome;

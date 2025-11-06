@@ -3,9 +3,10 @@
 <div class="topContent">
   <!-- Botão Adicionar Usuário -->
   <div class="flex justify-content-end mb-3">
-    <p-button label="Adicionar Usuário" icon="pi pi-plus" (onClick)="displayModal=true"></p-button>
+    <p-button label="Adicionar Usuário" icon="pi pi-plus"  (click)="showDialog()"></p-button>
 
-    <p-dialog header="Adicionar Usuário" [(visible)]="displayModal" [modal]="true" [closable]="true">
+    <p-dialog [header]="novoUsuario.idUsuario ? 'Editar Usuário' : 'Adicionar Usuário'" 
+          [(visible)]="displayModal" [modal]="true" [closable]="true">
 
     <div class="p-fluid">
         <div class="p-field">
@@ -24,8 +25,8 @@
         <br>
         <div class="p-field">
 
-        <label for="email">Senha*</label>
-        <input id="email" type="password" pInputText [(ngModel)]="novoUsuario.senha">
+        <label for="senha">Senha*</label>
+        <input id="senha" type="password" pInputText [(ngModel)]="novoUsuario.senha">
 
         </div>
         <br>
@@ -44,7 +45,7 @@
 
 
   <!-- Tabela de Usuários -->
-  <p-table [value]="usuarios" class="usuarios-table">
+  <p-table *ngIf="usuarios.length > 0" [value]="usuarios" class="usuarios-table">
     <ng-template pTemplate="header">
       <tr>
         <th>Nome</th>
@@ -59,8 +60,7 @@
         <td>{{ usuario.email }}</td>
         <td>{{ usuario.senha }}</td>
         <td>
-          <p-button icon="pi pi-pencil" (onClick)="displayModal=true"></p-button>
-          <p-button icon="pi pi-trash"></p-button>
+          <p-button icon="pi pi-pencil" (onClick)="onEdit(usuario)"></p-button>
         </td>
       </tr>
     </ng-template>

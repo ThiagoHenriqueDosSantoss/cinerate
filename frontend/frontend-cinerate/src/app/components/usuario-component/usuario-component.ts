@@ -19,7 +19,7 @@ import { Usuario } from '../../interface/Usuario';
 export class UsuarioComponent implements OnInit{
   displayModal = false;
 
-  novoUsuario: Usuario = { nome: '', email: '' , senha: '' };
+  novoUsuario: Usuario = { idUsuario: 0, nome: '', email: '' , senha: '' , dataDeCadastro: ''};
 
   usuarios: Usuario[] = [];
 
@@ -29,21 +29,41 @@ export class UsuarioComponent implements OnInit{
     this.buscarUsuarios();
   }
   salvarUsuario() {
-    const usuarioSalvar: Usuario = {
+  // Se tiver ID → está editando
+  if (this.novoUsuario.idUsuario) {
+
+    const usuarioEditar: Partial<Usuario> = {
       nome: this.novoUsuario.nome,
       email: this.novoUsuario.email,
-      senha: this.novoUsuario.senha
+      senha: this.novoUsuario.senha,
+      dataDeCadastro: this.novoUsuario.dataDeCadastro
     };
-    this.usuarioService.salvarUsuarios(usuarioSalvar).subscribe({
-      next: (usuarioSalvar) => {
-        this.displayModal = false;
-        this.novoUsuario = { nome: '', email: '' , senha: ''};
+
+    this.usuarioService.atualizarUsuarios(this.novoUsuario.idUsuario, usuarioEditar).subscribe({
+      next: () => {
+        setTimeout(() => {
+          this.displayModal = false;
+        }, 0);
+        this.resetarFormulario();
+        this.buscarUsuarios();
       },
-      error: (err) => {
-        console.error('Erro ao salvar usuário', err);
-      }
+      error: (err) => console.error(err)
+    });
+
+  // Novo usuário
+  } else {
+    this.usuarioService.salvarUsuarios(this.novoUsuario).subscribe({
+      next: () => {
+        setTimeout(() => {
+          this.displayModal = false;
+          this.resetarFormulario();
+          this.buscarUsuarios();
+        }, 0);
+      },
+      error: (err) => console.error(err)
     });
   }
+}
   buscarUsuarios() {
     this.usuarioService.buscarUsuarios().subscribe({
       next: (usuarios: Usuario[]) => {
@@ -52,6 +72,33 @@ export class UsuarioComponent implements OnInit{
       error: (err) => {
         console.error('Erro ao buscar usuários', err);
       }
+    });
+  }
+  showDialog(usuario?: Usuario) {
+    if (usuario && usuario.idUsuario) {
+      this.novoUsuario = { ...usuario };
+    } else {
+      this.resetarFormulario();
+    }
+
+    // Abrir o modal por último
+    setTimeout(() => {
+      this.displayModal = true;
+    });
+  }
+  resetarFormulario() {
+    this.novoUsuario = { idUsuario: 0, nome: '', email: '', senha: '' , dataDeCadastro: ''};
+  }
+  onEdit(usuario: Usuario) {
+    if (!usuario.idUsuario) {
+      console.error("Este usuário não possui ID. Não é possível editar.");
+      return;
+    }
+    this.usuarioService.buscarUsuariosPorID(usuario.idUsuario).subscribe({
+      next: (usuarioEncontrado) => {
+        this.showDialog(usuarioEncontrado);
+      },
+      error: (err) => console.error("Erro ao buscar usuário:", err)
     });
   }
 }
