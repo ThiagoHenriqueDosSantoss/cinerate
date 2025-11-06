@@ -32,8 +32,7 @@ export class ObraComponent implements OnInit {
 
   tiposObra = [
     { label: 'Filme', value: 'FILME' },
-    { label: 'Documentario', value: 'DOCUMENTARIO' },
-    { label: 'Artigo', value: 'ARTIGO' },
+    { label: 'Serie', value: 'Serie' },
     { label: 'Anime', value: 'ANIME' },
   ];
 

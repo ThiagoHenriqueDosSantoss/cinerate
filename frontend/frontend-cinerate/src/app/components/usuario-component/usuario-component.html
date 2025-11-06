@@ -1,5 +1,5 @@
 <div class="usuarios-container p-4">
-
+<h1>Gestão de Usuarios</h1>
 <div class="topContent">
   <!-- Botão Adicionar Usuário -->
   <div class="flex justify-content-end mb-3">
@@ -45,7 +45,7 @@
 
 
   <!-- Tabela de Usuários -->
-  <p-table *ngIf="usuarios.length > 0" [value]="usuarios" class="usuarios-table">
+  <p-table [value]="usuarios" class="usuarios-table">
     <ng-template pTemplate="header">
       <tr>
         <th>Nome</th>
@@ -54,7 +54,7 @@
         <th>Ações</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-usuario>
+    <ng-template pTemplate="body" let-usuario *ngIf="usuarios.length > 0">
       <tr>
         <td>{{ usuario.nome }}</td>
         <td>{{ usuario.email }}</td>
