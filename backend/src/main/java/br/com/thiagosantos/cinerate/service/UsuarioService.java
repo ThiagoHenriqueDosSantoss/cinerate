@@ -16,12 +16,12 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public Usuario criarUsuario(String nome, String email, String senha){
+    public Usuario criarUsuario(Usuario usuario){
         Usuario u = new Usuario();
-        u.setNome(nome);
-        String senhaHash = CriptografiaUtil.gerarHash(senha);
+        u.setNome(usuario.getNome());
+        String senhaHash = CriptografiaUtil.gerarHash(usuario.getSenha());
         u.setSenha(senhaHash);
-        u.setEmail(email);
+        u.setEmail(usuario.getEmail());
         u.setDataDeCadastro(LocalDateTime.now());
         return this.usuarioRepository.save(u);
     }

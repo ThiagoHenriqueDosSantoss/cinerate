@@ -21,25 +21,39 @@ export class UsuarioComponent implements OnInit{
 
   novoUsuario: Usuario = { nome: '', email: '' , senha: '' };
 
-  usuarios = [
-    { id: 1, nome: 'João Silva', email: 'joao@email.com' },
-    { id: 2, nome: 'Maria Souza', email: 'maria@email.com' },
-    { id: 3, nome: 'Carlos Oliveira', email: 'carlos@email.com' }
-  ];
+  usuarios: Usuario[] = [];
+
   constructor(private usuarioService: UsuarioService){}
 
   ngOnInit(): void {
-    this.usuarios;
+    this.buscarUsuarios();
   }
   salvarUsuario() {
-  this.usuarioService.salvarUsuarios(this.novoUsuario).subscribe({
-    next: (usuario) => {
-      console.log('Usuário salvo:', usuario);
-      this.displayModal = false; // fecha modal
-      this.novoUsuario = { nome: '', email: '' , senha: ''};
+    console.log('Usuário salvo:', this.novoUsuario);
+    const usuarioSalvar: Usuario = {
+      nome: this.novoUsuario.nome,
+      email: this.novoUsuario.email,
+      senha: this.novoUsuario.senha
+    };
+    this.usuarioService.salvarUsuarios(usuarioSalvar).subscribe({
+      next: (usuarioSalvar) => {
+        console.log('Usuário salvo:', usuarioSalvar);
+        this.displayModal = false;
+        this.novoUsuario = { nome: '', email: '' , senha: ''};
+      },
+      error: (err) => {
+        console.error('Erro ao salvar usuário', err);
+      }
+    });
+  }
+  buscarUsuarios() {
+  this.usuarioService.buscarUsuarios().subscribe({
+    next: (usuarios: Usuario[]) => {
+      this.usuarios = usuarios; // atualiza a lista do componente
+      console.log('Usuários carregados:', usuarios);
     },
     error: (err) => {
-      console.error('Erro ao salvar usuário', err);
+      console.error('Erro ao buscar usuários', err);
     }
   });
 }

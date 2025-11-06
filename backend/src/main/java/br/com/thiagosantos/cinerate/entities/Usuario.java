@@ -11,11 +11,11 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idusuario;
-    @Column(name = "nome", nullable = false, length = 60)
+    @Column(name = "nome", nullable = false)
     private String nome;
-    @Column(name = "email", nullable = false, length = 60)
+    @Column(name = "email", nullable = false)
     private String email;
-    @Column(name = "senha", nullable = false, length = 60)
+    @Column(name = "senha", nullable = false)
     private String senha;
     @Column(name = "dataDeCadastro")
     @CreationTimestamp
@@ -36,10 +36,6 @@ public class Usuario {
 
     public Long getIdUsuario() {
         return idusuario;
-    }
-
-    public void setIdUsuario(Long idUsuario) {
-        this.idusuario = idUsuario;
     }
 
     public String getNome() {

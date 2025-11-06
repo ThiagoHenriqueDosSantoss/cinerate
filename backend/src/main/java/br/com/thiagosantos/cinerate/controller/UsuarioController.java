@@ -18,8 +18,8 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @PostMapping
-    public ResponseEntity<Usuario> criarUsuario(String nome, String email, String senha){
-        Usuario response = this.usuarioService.criarUsuario(nome,senha,email);
+    public ResponseEntity<Usuario> criarUsuario(@RequestBody Usuario usuario){
+        Usuario response = this.usuarioService.criarUsuario(usuario);
         return ResponseEntity.ok(response);
     }
     @GetMapping
