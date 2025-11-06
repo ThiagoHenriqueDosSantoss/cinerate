@@ -1,0 +1,58 @@
+/* Estilização geral de botões PrimeNG */
+* {
+    --p-button-primary-color: white;
+    --p-button-primary-background: blue;
+    --p-button-primary-border-color: blue;
+    --p-button-primary-hover-background: blue;
+    --p-button-primary-hover-color: black;
+}
+
+/* Container superior com botão adicionar */
+.topContent {
+    display: flex;
+    justify-content: end;
+}
+
+/* Container principal da tela de obras */
+.obras-container {
+    background-color: #f5f5f5; /* fundo claro */
+    min-height: 80vh;           /* ocupa quase toda a tela */
+    border-radius: 8px;
+    padding: 2rem;
+}
+
+/* Tabela de obras */
+.obras-table {
+    margin-top: 30px;
+    padding-top: 1rem;
+    background-color: #ffffff;  /* tabela branca */
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Estilo do formulário dentro do modal */
+.p-fluid {
+    background-color: #f5f5f5; /* fundo claro */
+    min-height: 50vh;           /* ocupa quase toda a área do modal */
+    border-radius: 8px;
+    padding: 3rem;
+}
+/* Cada campo do formulário */
+.p-field {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Full width para dropdown */
+.p-field p-select {
+  width: 100%;
+}
+
+/* Footer com botões alinhados à direita */
+.p-footer {
+  grid-column: 1 / -1; /* ocupa as duas colunas */
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}

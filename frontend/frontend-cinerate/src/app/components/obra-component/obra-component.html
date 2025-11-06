@@ -1,1 +1,85 @@
-<p>obra-component works!</p>
+<div class="obras-container p-4">
+
+  <div class="topContent">
+    <div class="flex justify-content-end mb-4">
+      <p-button label="Adicionar Obra" icon="pi pi-plus" (click)="showDialog()"></p-button>
+
+      <p-dialog [header]="novaObra.idobra ? 'Editar Obra' : 'Adicionar Obra'" 
+                [(visible)]="displayModal" [modal]="true" [closable]="true">
+
+        <div class="p-fluid">
+          <!-- Título -->
+          <div class="p-field">
+            <label for="titulo">Título* </label>
+            <input id="titulo" type="text" pInputText [(ngModel)]="novaObra.titulo">
+          </div>
+          <br>
+
+          <!-- Descrição -->
+          <div class="p-field">
+            <label for="descricao">Descrição* </label>
+            <input id="descricao" type="text" pInputText [(ngModel)]="novaObra.descricao">
+          </div>
+          <br>
+
+          <!-- Ano de Lançamento -->
+          <div class="p-field">
+            <label for="anoLancamento">Ano de Lançamento* </label>
+            <input id="anoLancamento" type="number" pInputText [(ngModel)]="novaObra.anoLancamento">
+          </div>
+          <br>
+
+          <!-- Tipo da Obra -->
+          <div class="p-field">
+            <label for="tiposobra">Tipo de Obra* </label>
+            <p-select [options]="tiposObra" [(ngModel)]="novaObra.tipoobra" placeholder="Selecione um tipo de obra" class="w-full md:w-56" />
+          </div>
+          <br>
+
+          <!-- URL da Imagem -->
+          <div class="p-field">
+            <label for="imagemUrl">URL da Imagem</label>
+            <input id="imagemUrl" type="text" pInputText [(ngModel)]="novaObra.imagemUrl">
+          </div>
+          <br>
+
+          <!-- Footer com botões -->
+          <p-footer>
+            <p-button label="Salvar" (onClick)="salvarObra()" class="p-button-success"></p-button>
+            <p-button label="Cancelar" (onClick)="displayModal=false" class="p-button-secondary"></p-button>
+          </p-footer>
+        </div>
+
+      </p-dialog>
+    </div>
+  </div>
+
+  <!-- Tabela de Obras -->
+  <p-table [value]="obras" class="obras-table">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Título</th>
+        <th>Descrição</th>
+        <th>Ano</th>
+        <th>Tipo</th>
+        <th>Imagem</th>
+        <th>Ações</th>
+      </tr>
+    </ng-template>
+    <ng-template *ngIf="obras.length > 0" pTemplate="body" let-obra>
+      <tr>
+        <td>{{ obra.titulo }}</td>
+        <td>{{ obra.descricao }}</td>
+        <td>{{ obra.anoLancamento }}</td>
+        <td>{{ obra.tipoobra }}</td>
+        <td>
+          <img *ngIf="obra.imagemUrl" [src]="obra.imagemUrl" alt="Imagem da Obra" width="50">
+        </td>
+        <td>
+          <p-button icon="pi pi-pencil" (onClick)="onEdit(obra)"></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+</div>
