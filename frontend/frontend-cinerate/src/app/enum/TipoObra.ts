@@ -1,6 +1,5 @@
 export enum TipoObra{
     FILME = 'FILME',
-    DOCUMENTARIO = 'DOCUMENTARIO',
-    ARTIGO = 'ARTIGO',
+    SERIE = 'SERIE',
     ANIME = 'ANIME'
 }

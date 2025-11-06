@@ -19,4 +19,16 @@ export class ObraService {
     const url = `${this.baseUrl}/api/obra/listarObra`;
     return this.http.get(url);
   }
+  public buscarObrasPorID(idobra:number):Observable<Obra>{
+    const url = `${this.baseUrl}/api/obra/listarObra/${idobra}`;
+    return this.http.get<Obra>(url);
+  }
+  public atualizarObra(idobra:number, obraParaAtualizar:Obra):Observable<Obra>{
+    const url = `${this.baseUrl}/api/obra/atualizarObra/${idobra}`;
+    return this.http.put<Obra>(url,obraParaAtualizar);
+  }
+  public deletarObra(idobra:number):Observable<Obra>{
+    const url = `${this.baseUrl}/api/obra/removerObra/${idobra}`;
+    return this.http.delete<Obra>(url);
+  }
 }

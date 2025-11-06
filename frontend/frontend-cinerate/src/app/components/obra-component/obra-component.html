@@ -4,7 +4,7 @@
     <div class="flex justify-content-end mb-4">
       <p-button label="Adicionar Obra" icon="pi pi-plus" (click)="showDialog()"></p-button>
 
-      <p-dialog [header]="novaObra.idobra ? 'Editar Obra' : 'Adicionar Obra'" 
+      <p-dialog [header]="novaObra.idObra ? 'Editar Obra' : 'Adicionar Obra'" 
                 [(visible)]="displayModal" [modal]="true" [closable]="true">
 
         <div class="p-fluid">
@@ -45,7 +45,11 @@
 
           <!-- Footer com botões -->
           <p-footer>
-            <p-button label="Salvar" (onClick)="salvarObra()" class="p-button-success"></p-button>
+            <p-button 
+                label="Salvar"
+                (click)="salvarObra()"
+                class="p-button-success">
+                </p-button>
             <p-button label="Cancelar" (onClick)="displayModal=false" class="p-button-secondary"></p-button>
           </p-footer>
         </div>
@@ -72,11 +76,14 @@
         <td>{{ obra.descricao }}</td>
         <td>{{ obra.anoLancamento }}</td>
         <td>{{ obra.tipoobra }}</td>
+        <td>{{ obra.imagemUrl }}</td>
         <td>
           <img *ngIf="obra.imagemUrl" [src]="obra.imagemUrl" alt="Imagem da Obra" width="50">
         </td>
         <td>
           <p-button icon="pi pi-pencil" (onClick)="onEdit(obra)"></p-button>
+            <p-confirmdialog />
+            <p-button (click)="onDelete(obra,$event)" icon="pi pi-trash" severity="danger" [outlined]="false" />
         </td>
       </tr>
     </ng-template>
