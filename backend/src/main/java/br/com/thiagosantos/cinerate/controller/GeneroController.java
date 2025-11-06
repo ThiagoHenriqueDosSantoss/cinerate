@@ -33,6 +33,7 @@ public class GeneroController {
     // NOVO
     @PostMapping("/novoGenero")
     public ResponseEntity<Genero> novo(@RequestBody Genero genero) {
+        genero.setIdgenero(null);
         return ResponseEntity.ok(generoRepository.save(genero));
     }
 
