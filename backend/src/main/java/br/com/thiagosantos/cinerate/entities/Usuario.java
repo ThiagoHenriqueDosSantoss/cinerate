@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "usuario")
@@ -21,6 +23,8 @@ public class Usuario {
     @CreationTimestamp
     private LocalDateTime dataDeCadastro;
 
+    @OneToMany(mappedBy = "usuario")
+    private Set<UsuarioObra> usuarioObras = new HashSet<>();
 
     public Usuario(){
 

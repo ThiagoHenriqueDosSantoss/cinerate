@@ -30,21 +30,22 @@ public class UsuarioService {
     }
 
     public Usuario atualizarUsuario(Long idusuario, Usuario usuario){
-        Usuario u = new Usuario();
-        Optional<Usuario> usuarioOptional = usuarioRepository.findById(idusuario);
-        usuarioOptional.get();
+        Usuario u = usuarioRepository.findById(idusuario)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         if(usuario.getNome() != null){
             u.setNome(usuario.getNome());
         }
-        if (usuario.getSenha()!= null){
+
+        if (usuario.getSenha() != null){
             String senhaHash = CriptografiaUtil.gerarHash(usuario.getSenha());
             u.setSenha(senhaHash);
-
         }
+
         if(usuario.getEmail() != null){
             u.setEmail(usuario.getEmail());
         }
-        return this.usuarioRepository.save(u);
+
+        return usuarioRepository.save(u);
     }
 }

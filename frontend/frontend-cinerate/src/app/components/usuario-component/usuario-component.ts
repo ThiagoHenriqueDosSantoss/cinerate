@@ -29,7 +29,6 @@ export class UsuarioComponent implements OnInit{
     this.buscarUsuarios();
   }
   salvarUsuario() {
-    console.log('Usuário salvo:', this.novoUsuario);
     const usuarioSalvar: Usuario = {
       nome: this.novoUsuario.nome,
       email: this.novoUsuario.email,
@@ -37,7 +36,6 @@ export class UsuarioComponent implements OnInit{
     };
     this.usuarioService.salvarUsuarios(usuarioSalvar).subscribe({
       next: (usuarioSalvar) => {
-        console.log('Usuário salvo:', usuarioSalvar);
         this.displayModal = false;
         this.novoUsuario = { nome: '', email: '' , senha: ''};
       },
@@ -47,14 +45,13 @@ export class UsuarioComponent implements OnInit{
     });
   }
   buscarUsuarios() {
-  this.usuarioService.buscarUsuarios().subscribe({
-    next: (usuarios: Usuario[]) => {
-      this.usuarios = usuarios; // atualiza a lista do componente
-      console.log('Usuários carregados:', usuarios);
-    },
-    error: (err) => {
-      console.error('Erro ao buscar usuários', err);
-    }
-  });
-}
+    this.usuarioService.buscarUsuarios().subscribe({
+      next: (usuarios: Usuario[]) => {
+        this.usuarios = usuarios;
+      },
+      error: (err) => {
+        console.error('Erro ao buscar usuários', err);
+      }
+    });
+  }
 }

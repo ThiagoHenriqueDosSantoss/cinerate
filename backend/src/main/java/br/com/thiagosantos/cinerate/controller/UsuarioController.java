@@ -26,7 +26,7 @@ public class UsuarioController {
     public ResponseEntity<List<Usuario>> listarUsuario(){
         return ResponseEntity.ok(this.usuarioService.listarUsuario());
     }
-    @PatchMapping("/{idusuario}")
+    @PatchMapping("/atualizar/{idusuario}")
     public ResponseEntity<Usuario> atualizarUsuario(@PathVariable Long idusuario,Usuario usuario){
         return ResponseEntity.ok(this.usuarioService.atualizarUsuario(idusuario, usuario));
     }

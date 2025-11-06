@@ -47,19 +47,19 @@
   <p-table [value]="usuarios" class="usuarios-table">
     <ng-template pTemplate="header">
       <tr>
-        <th>ID</th>
         <th>Nome</th>
         <th>Email</th>
+        <th>Senha</th>
         <th>Ações</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-usuario>
       <tr>
-        <td>{{ usuario.id }}</td>
         <td>{{ usuario.nome }}</td>
         <td>{{ usuario.email }}</td>
+        <td>{{ usuario.senha }}</td>
         <td>
-          <p-button icon="pi pi-pencil"></p-button>
+          <p-button icon="pi pi-pencil" (onClick)="displayModal=true"></p-button>
           <p-button icon="pi pi-trash"></p-button>
         </td>
       </tr>

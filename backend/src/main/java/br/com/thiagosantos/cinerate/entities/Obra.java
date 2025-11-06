@@ -29,13 +29,8 @@ public class Obra {
     @Column(name = "imagemUrl",nullable = true)
     private String imagemUrl;
 
-    @ManyToMany
-    @JoinTable(
-            name = "usuario",
-            joinColumns = @JoinColumn(name = "idobra"),
-            inverseJoinColumns = @JoinColumn(name = "idusuario")
-    )
-    private Set<Usuario> usuarios = new HashSet<>();
+    @OneToMany(mappedBy = "obra")
+    private Set<UsuarioObra> usuarioObras = new HashSet<>();
 
     @ManyToMany(mappedBy = "obras")
     private Set<Genero> genero = new HashSet<>();
@@ -44,14 +39,14 @@ public class Obra {
 
     }
 
-    public Obra(Long idobra, String titulo, String descricao, Integer anoLancamento, TipoObraEnum tipoobra, String imagemUrl, Set<Usuario> usuarios, Set<Genero> genero) {
+    public Obra(Long idobra, String titulo, String descricao, Integer anoLancamento, TipoObraEnum tipoobra, String imagemUrl, Set<UsuarioObra> usuarios, Set<Genero> genero) {
         this.idobra = idobra;
         this.titulo = titulo;
         this.descricao = descricao;
         this.anoLancamento = anoLancamento;
         this.tipoobra = tipoobra;
         this.imagemUrl = imagemUrl;
-        this.usuarios = usuarios;
+        this.usuarioObras = usuarios;
         this.genero = genero;
     }
 
@@ -103,12 +98,12 @@ public class Obra {
         this.imagemUrl = imagemUrl;
     }
 
-    public Set<Usuario> getUsuarios() {
-        return usuarios;
+    public Set<UsuarioObra> getUsuarios() {
+        return usuarioObras;
     }
 
-    public void setUsuarios(Set<Usuario> usuarios) {
-        this.usuarios = usuarios;
+    public void setUsuarios(Set<UsuarioObra> usuarios) {
+        this.usuarioObras = usuarios;
     }
 
     public Set<Genero> getGenero() {

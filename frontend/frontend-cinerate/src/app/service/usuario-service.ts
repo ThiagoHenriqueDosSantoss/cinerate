@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 export class UsuarioService {
   private baseUrl = 'http://localhost:8080';
 
-  constructor(private http: HttpClient) {}  // <-- apenas isso
+  constructor(private http: HttpClient) {}
 
   public salvarUsuarios(novoUsuario: Usuario): Observable<Usuario> {
     const url = `${this.baseUrl}/api/usuario`;
@@ -18,5 +18,9 @@ export class UsuarioService {
   public buscarUsuarios():Observable<Usuario[]>{
     const url = `${this.baseUrl}/api/usuario`;
     return this.http.get<Usuario[]>(url);
+  }
+  public atualizarUsuarios(idusuario:number, atualizaUsuarios: Usuario): Observable<Usuario>{
+    const url = `${this.baseUrl}/api/usuario/atualiza/${idusuario}`;
+    return this.http.patch<Usuario>(url, atualizaUsuarios);
   }
 }
