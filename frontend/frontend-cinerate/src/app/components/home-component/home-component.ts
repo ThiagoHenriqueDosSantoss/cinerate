@@ -34,6 +34,11 @@ export class HomeComponent implements OnInit{
                 icon: 'pi pi-users',
                 routerLink:  ['/home/usuarios'] 
             },
+            {
+                label: 'Generos',
+                icon: 'pi pi-users',
+                routerLink:  ['/home/generos'] 
+            },
         ]
     }
 }

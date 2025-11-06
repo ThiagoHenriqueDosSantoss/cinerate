@@ -1,0 +1,76 @@
+/* Estilização geral de botões PrimeNG */
+* {
+    --p-button-primary-color: white;
+    --p-button-primary-background: blue;
+    --p-button-primary-border-color: blue;
+    --p-button-primary-hover-background: blue;
+    --p-button-primary-hover-color: black;
+}
+
+.gerenciar-generos-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.07);
+  max-width: 900px;
+  margin: 24px auto;
+}
+
+/* Título */
+.gerenciar-generos-container h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+/* Campo */
+.p-field {
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+
+.p-field label {
+  font-weight: 500;
+  color: #475569;
+  font-size: .95rem;
+}
+
+/* Botão salvar */
+.p-button-success {
+  align-self: flex-start;
+}
+
+/* Table */
+:host ::ng-deep .p-table {
+  margin-top: 1rem;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+:host ::ng-deep .p-table thead th {
+  background: #f8fafc;
+  color: #0f172a;
+  font-weight: 600;
+  padding: 12px;
+}
+
+:host ::ng-deep .p-table tbody tr td {
+  padding: 10px 12px;
+}
+
+/* Botões de ação */
+:host ::ng-deep .p-button[icon="pi pi-pencil"] {
+  margin-right: .4rem;
+  background: #3b82f6;
+  border: none;
+}
+
+:host ::ng-deep .p-button[icon="pi pi-trash"] {
+  background: #ef4444;
+  border: none;
+}
