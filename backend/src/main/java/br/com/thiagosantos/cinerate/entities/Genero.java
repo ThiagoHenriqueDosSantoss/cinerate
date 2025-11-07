@@ -1,9 +1,11 @@
 package br.com.thiagosantos.cinerate.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,19 +19,16 @@ public class Genero {
     @Column(name = "nome", nullable = false,length = 55)
     private String nome;
 
-    @ManyToMany
-    @JoinTable(
-            name = "obra_genero",
-            joinColumns = @JoinColumn(name = "idgenero"),
-            inverseJoinColumns = @JoinColumn(name = "idobra")
-    )
-    private Set<Obra> obras = new HashSet<>();
+    @OneToMany(mappedBy = "genero")
+    @JsonIgnore
+    private List<Obra> obras;
+
 
     public Genero() {
 
     }
 
-    public Genero(Long idgenero, String nome, Set<Obra> obras) {
+    public Genero(Long idgenero, String nome, List<Obra> obras) {
         this.idgenero = idgenero;
         this.nome = nome;
         this.obras = obras;
@@ -51,11 +50,11 @@ public class Genero {
         this.nome = nome;
     }
 
-    public Set<Obra> getObras() {
+    public List<Obra> getObras() {
         return obras;
     }
 
-    public void setObras(Set<Obra> obras) {
+    public void setObras(List<Obra> obras) {
         this.obras = obras;
     }
 }

@@ -38,7 +38,7 @@ public class UsuarioController {
             return ResponseEntity.notFound().build();
         }
         Usuario usuario = usuarioExistente.get();
-        usuario.setNome(usuarioAtualizado.getNome());
+        usuario.setLogin(usuarioAtualizado.getLogin());
         usuario.setEmail(usuarioAtualizado.getEmail());
         usuario.setSenha(usuarioAtualizado.getSenha());
         Usuario usuarioSalvo = usuarioRepository.save(usuario);

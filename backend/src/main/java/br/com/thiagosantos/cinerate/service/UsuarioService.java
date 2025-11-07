@@ -5,6 +5,7 @@ import br.com.thiagosantos.cinerate.entities.Usuario;
 import br.com.thiagosantos.cinerate.repository.UsuarioRepository;
 import br.com.thiagosantos.cinerate.security.CriptografiaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -18,11 +19,12 @@ public class UsuarioService {
 
     public Usuario criarUsuario(Usuario usuario){
         Usuario u = new Usuario();
-        u.setNome(usuario.getNome());
-        String senhaHash = CriptografiaUtil.gerarHash(usuario.getSenha());
+        u.setLogin(usuario.getLogin());
+        String senhaHash = new BCryptPasswordEncoder().encode(usuario.getSenha());
         u.setSenha(senhaHash);
         u.setEmail(usuario.getEmail());
         u.setDataDeCadastro(LocalDateTime.now());
+        u.setCredencial(usuario.getCredencial());
         return this.usuarioRepository.save(u);
     }
     public List<Usuario> listarUsuario(){
@@ -33,8 +35,8 @@ public class UsuarioService {
         Usuario u = usuarioRepository.findById(idusuario)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
-        if(usuario.getNome() != null){
-            u.setNome(usuario.getNome());
+        if(usuario.getLogin() != null){
+            u.setLogin(usuario.getLogin());
         }
 
         if (usuario.getSenha() != null){
@@ -45,7 +47,9 @@ public class UsuarioService {
         if(usuario.getEmail() != null){
             u.setEmail(usuario.getEmail());
         }
-
+        if (usuario.getCredencial() != null){
+            u.setCredencial(u.getCredencial());
+        }
         return usuarioRepository.save(u);
     }
 }

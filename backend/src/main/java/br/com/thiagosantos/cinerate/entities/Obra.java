@@ -1,6 +1,8 @@
 package br.com.thiagosantos.cinerate.entities;
 
 import br.com.thiagosantos.cinerate.enums.TipoObraEnum;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -30,6 +32,7 @@ public class Obra {
     private String imagemUrl;
 
     @ManyToOne
+    @JsonIgnore
     private Usuario usuario;
 
     @ManyToOne

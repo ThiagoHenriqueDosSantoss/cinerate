@@ -1,7 +1,9 @@
 package br.com.thiagosantos.cinerate.entities;
 
 import br.com.thiagosantos.cinerate.enums.UserRoles;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,12 +17,15 @@ import java.util.Set;
 
 @Entity
 @Table(name = "usuario")
+@Getter
+@Setter
+@EqualsAndHashCode(of = "idusuario")
 public class Usuario implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idusuario;
-    @Column(name = "nome", nullable = false)
-    private String nome;
+    @Column(name = "login", nullable = false)
+    private String login;
     @Column(name = "email", nullable = false)
     private String email;
     @Column(name = "senha", nullable = false)
@@ -30,16 +35,17 @@ public class Usuario implements UserDetails{
     private LocalDateTime dataDeCadastro;
 
     @OneToMany(mappedBy = "usuario")
-    private Set<UsuarioObra> usuarioObras = new HashSet<>();
-
+    @JsonIgnore
+    private Set<Obra> usuarioObras = new HashSet<>();
+    @Enumerated(EnumType.STRING)
     private UserRoles credencial;
     public Usuario(){
 
     }
 
-    public Usuario(Long idusuario, String nome, String email, String senha, LocalDateTime dataDeCadastro, Set<UsuarioObra> usuarioObras, UserRoles credencial) {
+    public Usuario(Long idusuario, String login, String email, String senha, LocalDateTime dataDeCadastro, Set<Obra> usuarioObras, UserRoles credencial) {
         this.idusuario = idusuario;
-        this.nome = nome;
+        this.login = login;
         this.email = email;
         this.senha = senha;
         this.dataDeCadastro = dataDeCadastro;
@@ -56,12 +62,12 @@ public class Usuario implements UserDetails{
     }
 
 
-    public String getNome() {
-        return nome;
+    public String getLogin() {
+        return login;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
     public String getEmail() {
@@ -118,7 +124,7 @@ public class Usuario implements UserDetails{
 
     @Override
     public String getUsername() {
-        return nome;
+        return login;
     }
 
     @Override
