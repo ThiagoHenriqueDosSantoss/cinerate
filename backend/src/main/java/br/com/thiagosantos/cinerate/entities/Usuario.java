@@ -2,6 +2,7 @@ package br.com.thiagosantos.cinerate.entities;
 
 import br.com.thiagosantos.cinerate.enums.UserRoles;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -25,6 +26,7 @@ public class Usuario implements UserDetails{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idusuario;
     @Column(name = "login", nullable = false)
+    @JsonProperty("nome")
     private String login;
     @Column(name = "email", nullable = false)
     private String email;
