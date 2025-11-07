@@ -1,5 +1,6 @@
 package br.com.thiagosantos.cinerate.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -10,6 +11,7 @@ import java.util.Set;
 public class Genero {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonProperty("idGenero")
     private Long idgenero;
 
     @Column(name = "nome", nullable = false,length = 55)

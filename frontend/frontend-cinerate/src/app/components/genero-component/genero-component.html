@@ -7,7 +7,25 @@
     <input type="text" pInputText [(ngModel)]="novoGenero.nome">
   </div>
 
-  <p-button label="Salvar Gênero" icon="pi pi-check"></p-button>
+  <div class="modalContent">
+    <p-dialog header="Edit Profile" [modal]="true" [(visible)]="visible" [style]="{ width: '25rem' }">
+      <span class="p-text-secondary block mb-8">Editar Gêneros</span>
+      <br>
+      <div class="flex items-center gap-4 mb-4">
+          <label for="nome" class="font-semibold w-24">Nome do Gênero:</label>
+          <input id="nome" pInputText [(ngModel)]="novoGenero.nome" class="flex-auto" autocomplete="off" />
+      </div>
+      <br>
+      <div class="flex justify-end gap-2">
+          <p-button label="Cancel" severity="danger" (click)="visible = false" />
+          <p-button label="Save" (click)="salvarGenero()"/>
+      </div>
+    </p-dialog>
+  </div>
+  
+
+
+  <p-button label="Salvar Gênero" icon="pi pi-check" (click)="salvarGenero()"></p-button>
 
   <hr>
 
@@ -23,8 +41,9 @@
       <tr>
         <td>{{ genero.nome }}</td>
         <td>
-          <p-button icon="pi pi-pencil" severity="danger"></p-button>
-          <p-button icon="pi pi-trash" severity="danger"></p-button>
+          <p-button icon="pi pi-pencil" severity="danger" (click)="editarGenero(genero)"></p-button>
+          <p-confirmdialog />
+          <p-button icon="pi pi-trash" severity="danger" (click)="deletarGenero(genero)"></p-button>
         </td>
       </tr>
     </ng-template>
