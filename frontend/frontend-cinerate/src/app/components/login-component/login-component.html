@@ -1,11 +1,10 @@
-<div class="login-container">
+<div class="login-container" *ngIf="isBrowser">
   <p-card header="Login" styleClass="login-card">
-
     <div class="p-fluid">
 
       <div class="field">
         <label for="usuario">Usuário</label>
-        <input id="usuario" type="text" pInputText [(ngModel)]="loginUsuario.login" />
+        <input id="usuario" type="text" pInputText [(ngModel)]="loginUsuario.nome" />
       </div>
 
       <div class="field">
@@ -16,6 +15,5 @@
       <button pButton label="Entrar" class="p-button-primary" (click)="login()"></button>
 
     </div>
-
   </p-card>
 </div>

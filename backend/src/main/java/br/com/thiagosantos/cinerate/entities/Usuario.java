@@ -2,13 +2,9 @@ package br.com.thiagosantos.cinerate.entities;
 
 import br.com.thiagosantos.cinerate.enums.UserRoles;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
@@ -21,13 +17,12 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "idusuario")
-public class Usuario implements UserDetails{
+public class Usuario{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idusuario;
-    @Column(name = "login", nullable = false)
-    @JsonProperty("nome")
-    private String login;
+    @Column(name = "nome", nullable = false)
+    private String nome;
     @Column(name = "email", nullable = false)
     private String email;
     @Column(name = "senha", nullable = false)
@@ -45,9 +40,9 @@ public class Usuario implements UserDetails{
 
     }
 
-    public Usuario(Long idusuario, String login, String email, String senha, LocalDateTime dataDeCadastro, Set<Obra> usuarioObras, UserRoles credencial) {
+    public Usuario(Long idusuario, String nome, String email, String senha, LocalDateTime dataDeCadastro, Set<Obra> usuarioObras, UserRoles credencial) {
         this.idusuario = idusuario;
-        this.login = login;
+        this.nome = nome;
         this.email = email;
         this.senha = senha;
         this.dataDeCadastro = dataDeCadastro;
@@ -64,12 +59,12 @@ public class Usuario implements UserDetails{
     }
 
 
-    public String getLogin() {
-        return login;
+    public String getNome() {
+        return nome;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getEmail() {
@@ -102,50 +97,5 @@ public class Usuario implements UserDetails{
 
     public void setCredencial(UserRoles credencial) {
         this.credencial = credencial;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.credencial == UserRoles.ADMIN){
-            return List.of(
-              new SimpleGrantedAuthority("ROLE_ADMIN"),
-              new SimpleGrantedAuthority("ROLE_USER")
-            );
-        }
-        else{
-            return List.of(
-                    new SimpleGrantedAuthority("ROLE_USER")
-            );
-        }
-    }
-
-    @Override
-    public String getPassword() {
-        return senha;
-    }
-
-    @Override
-    public String getUsername() {
-        return login;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
     }
 }
