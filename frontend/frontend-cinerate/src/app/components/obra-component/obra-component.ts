@@ -13,6 +13,7 @@ import { Select } from 'primeng/select';
 import { ObraService } from '../../service/obra-service';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Genero } from '../../interface/Genero';
 
 @Component({
   selector: 'app-obra-component',
@@ -29,6 +30,7 @@ export class ObraComponent implements OnInit {
   novaObra: Obra = this.criarObraVazia();
   obraSelecionadaExclusao!: Obra | undefined; 
   obras: Obra[] = [];
+  generos: Genero[] = [];
 
   tiposObra = [
     { label: 'Filme', value: 'FILME' },
@@ -54,7 +56,11 @@ export class ObraComponent implements OnInit {
       descricao: '',
       anoLancamento: 0,
       tipoobra: TipoObra.FILME,
-      imagemUrl: ''
+      imagemUrl: '',
+      genero: {
+        idGenero: null,
+        nome: ''
+      }
     };
   }
 
@@ -85,6 +91,7 @@ export class ObraComponent implements OnInit {
         }
       });
     } else {
+      console.log(obraParaSalvar)
       this.obraService.criarNovaObra(obraParaSalvar).subscribe({
         next: () => {
           this.buscarObras();
@@ -107,17 +114,19 @@ export class ObraComponent implements OnInit {
       this.novaObra = { ...obra };
     } else {
       this.resetarFormulario();
+      this.buscarGeneros();
     }
     this.displayModal = true;
   }
 
   onEdit(obra: Obra) {
     if (!obra?.idObra) return;
-
+    console.log(obra);
     this.obraService.buscarObrasPorID(obra.idObra).subscribe({
       next: (res) => {
         this.novaObra = res;
         this.displayModal = true;
+        this.buscarGeneros();
         this.cd.detectChanges();
       },
       error: () => {
@@ -160,6 +169,14 @@ export class ObraComponent implements OnInit {
       },
       reject: () => {
         this.obraSelecionadaExclusao = undefined;
+      }
+    });
+  }
+  buscarGeneros(){
+    this.obraService.buscarGeneros().subscribe({
+      next: (genero: Genero[]) => {
+        console.log(genero);
+        this.generos = genero;
       }
     });
   }

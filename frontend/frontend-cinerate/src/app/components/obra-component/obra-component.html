@@ -43,6 +43,18 @@
           </div>
           <br>
 
+          <!-- Tipo de Gênero -->
+          <div class="p-field">
+            <label for="tiposobra">Tipo de Gênero* </label>
+            <p-select 
+              [options]="generos" 
+              optionLabel="nome" 
+              optionValue="idGenero" 
+              [(ngModel)]="novaObra.genero.idGenero" 
+              placeholder="Selecione um tipo de gênero de filme" 
+              class="w-full md:w-56" />
+          </div>
+          <br>
           <!-- Footer com botões -->
           <p-footer>
             <p-button 
@@ -67,6 +79,7 @@
         <th>Ano</th>
         <th>Tipo</th>
         <th>Imagem</th>
+        <th>Gênero</th>
         <th>Ações</th>
       </tr>
     </ng-template>
@@ -77,6 +90,7 @@
         <td>{{ obra.anoLancamento }}</td>
         <td>{{ obra.tipoobra }}</td>
         <td>{{ obra.imagemUrl }}</td>
+        <td>{{ obra.genero?.nome }}</td>
         <td>
           <img *ngIf="obra.imagemUrl" [src]="obra.imagemUrl" alt="Imagem da Obra" width="50">
         </td>

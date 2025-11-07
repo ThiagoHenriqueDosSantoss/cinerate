@@ -29,24 +29,23 @@ public class Obra {
     @Column(name = "imagemUrl",nullable = true)
     private String imagemUrl;
 
-    @OneToMany(mappedBy = "obra")
-    private Set<UsuarioObra> usuarioObras = new HashSet<>();
+    @ManyToOne
+    private Usuario usuario;
 
-    @ManyToMany(mappedBy = "obras")
-    private Set<Genero> genero = new HashSet<>();
+    @ManyToOne
+    private Genero genero;
 
     public Obra(){
 
     }
 
-    public Obra(Long idobra, String titulo, String descricao, Integer anoLancamento, TipoObraEnum tipoobra, String imagemUrl, Set<UsuarioObra> usuarios, Set<Genero> genero) {
+    public Obra(Long idobra, String titulo, String descricao, Integer anoLancamento, TipoObraEnum tipoobra, String imagemUrl,Genero genero) {
         this.idobra = idobra;
         this.titulo = titulo;
         this.descricao = descricao;
         this.anoLancamento = anoLancamento;
         this.tipoobra = tipoobra;
         this.imagemUrl = imagemUrl;
-        this.usuarioObras = usuarios;
         this.genero = genero;
     }
 
@@ -98,19 +97,19 @@ public class Obra {
         this.imagemUrl = imagemUrl;
     }
 
-    public Set<UsuarioObra> getUsuarios() {
-        return usuarioObras;
+    public Usuario getUsuarios() {
+        return usuario;
     }
 
-    public void setUsuarios(Set<UsuarioObra> usuarios) {
-        this.usuarioObras = usuarios;
+    public void setUsuarios(Usuario usuarios) {
+        this.usuario = usuarios;
     }
 
-    public Set<Genero> getGenero() {
+    public Genero getGenero() {
         return genero;
     }
 
-    public void setGenero(Set<Genero> genero) {
+    public void setGenero(Genero genero) {
         this.genero = genero;
     }
 }

@@ -36,6 +36,16 @@ public class ObraController {
     @PostMapping("/novaObra")
     public ResponseEntity<Obra> novo(@RequestBody Obra obra) {
         obra.setIdObra(null);
+        Obra o = new Obra(
+                obra.getIdObra(),
+                obra.getTitulo(),
+                obra.getDescricao(),
+                obra.getAnoLancamento(),
+                obra.getTipoobra(),
+                obra.getImagemUrl(),
+                obra.getGenero()
+        );
+
         return ResponseEntity.ok(obraRepository.save(obra));
     }
 

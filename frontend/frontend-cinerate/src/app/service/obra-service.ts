@@ -31,4 +31,8 @@ export class ObraService {
     const url = `${this.baseUrl}/api/obra/removerObra/${idobra}`;
     return this.http.delete<Obra>(url);
   }
+  public buscarGeneros():Observable<any>{
+    const url = `${this.baseUrl}/api/genero/listarGenero`;
+    return this.http.get(url);
+  }
 }
