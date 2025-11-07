@@ -5,12 +5,12 @@
 
       <div class="field">
         <label for="usuario">Usuário</label>
-        <input id="usuario" type="text" pInputText [(ngModel)]="usuario" />
+        <input id="usuario" type="text" pInputText [(ngModel)]="loginUsuario.login" />
       </div>
 
       <div class="field">
         <label for="senha">Senha</label>
-        <input id="senha" type="password" pInputText [(ngModel)]="senha" />
+        <input id="senha" type="password" pInputText [(ngModel)]="loginUsuario.senha" />
       </div>
 
       <button pButton label="Entrar" class="p-button-primary" (click)="login()"></button>

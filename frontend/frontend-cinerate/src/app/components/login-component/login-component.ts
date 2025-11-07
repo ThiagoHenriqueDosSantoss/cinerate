@@ -5,6 +5,7 @@ import { InputTextModule } from 'primeng/inputtext';
 
 import { CardModule } from 'primeng/card';
 import { CommonModule } from '@angular/common';
+import { Login } from '../../interface/Login';
 
 @Component({
   selector: 'app-login-component',
@@ -14,11 +15,13 @@ import { CommonModule } from '@angular/common';
   styleUrl: './login-component.css',
 })
 export class LoginComponent {
-  usuario: string = '';
-  senha: string = '';
+  loginUsuario: Login = {
+    login: '',
+    senha: ''
+  }
 
    login() {
-    if (this.usuario === 'admin' && this.senha === '123') {
+    if (this.loginUsuario.login === 'admin' && this.loginUsuario.senha === '123') {
       console.log('✅ Login ok!');
       // redireciona aqui, se quiser
     } else {
