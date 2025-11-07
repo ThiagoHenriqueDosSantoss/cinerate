@@ -1,0 +1,24 @@
+/* Estilização geral de botões PrimeNG */
+* {
+    --p-button-primary-color: white;
+    --p-button-primary-background: blue;
+    --p-button-primary-border-color: blue;
+    --p-button-primary-hover-background: blue;
+    --p-button-primary-hover-color: black;
+}
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f1f1f1;
+}
+
+.login-card {
+  width: 320px;
+  padding: 20px;
+}
+
+.field {
+  margin-bottom: 15px;
+}
