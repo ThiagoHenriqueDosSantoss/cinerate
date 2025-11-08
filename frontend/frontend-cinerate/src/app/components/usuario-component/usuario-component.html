@@ -27,8 +27,15 @@
 
         <label for="senha">Senha*</label>
         <input id="senha" type="password" pInputText [(ngModel)]="novoUsuario.senha">
-
+          
         </div>
+        
+        <br>
+        <!-- Tipo da Credencial -->
+          <div class="p-field">
+            <label for="tiposobra">Tipo de Crendencial* </label>
+            <p-select [options]="tiposCredencial" [(ngModel)]="novoUsuario.credencial" placeholder="Selecione um tipo de obra" class="w-full md:w-56" />
+          </div>
         <br>
         <p-footer>
 
@@ -51,6 +58,7 @@
         <th>Nome</th>
         <th>Email</th>
         <th>Senha</th>
+        <th>Credencial</th>
         <th>Ações</th>
       </tr>
     </ng-template>
@@ -59,6 +67,7 @@
         <td>{{ usuario.nome }}</td>
         <td>{{ usuario.email }}</td>
         <td>{{ usuario.senha }}</td>
+        <td>{{ usuario.credencial }}</td>
         <td>
           <p-button icon="pi pi-pencil" (onClick)="onEdit(usuario)"></p-button>
         </td>

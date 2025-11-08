@@ -1,4 +1,5 @@
-export interface Genero{
-    idGenero: number | null,
-    nome:string,
+export interface Genero {
+  idGenero: number | null;
+  nome: string;
+  nomeUsuarioCriador?: string;
 }

@@ -28,7 +28,7 @@ export class GeneroComponent implements OnInit {
 
   novoGenero: Genero = {
     idGenero: null,
-    nome: ''
+    nome: '',
   }
   constructor(private generoService: GeneroService, private confirmationService: ConfirmationService,
   private messageService: MessageService){}
@@ -42,6 +42,7 @@ export class GeneroComponent implements OnInit {
           idGenero: this.novoGenero.idGenero,
           nome: this.novoGenero.nome
         }
+        console.log(generoParaEditar);
         this.generoService.atualizaGenero(generoParaEditar?.idGenero as number,generoParaEditar).subscribe({
           next: (genero) => {
             this.resetaFormulario();
@@ -56,6 +57,7 @@ export class GeneroComponent implements OnInit {
         idGenero: this.novoGenero.idGenero,
         nome: this.novoGenero.nome
         }
+        console.log(generoParaSalvar);
         if(generoParaSalvar.nome === ''){
           alert('Por favor informe um nome para o gênero antes de clicar em salvar!');  
         }

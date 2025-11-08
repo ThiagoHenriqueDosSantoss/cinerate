@@ -32,7 +32,7 @@ public class LoginController {
         }
 
         Usuario usuario = usuarioOpt.get();
-        String token = JwtUtil.gerarToken(usuario.getNome());
+        String token = JwtUtil.gerarToken(usuario);
 
         return ResponseEntity.ok(new LoginResponseDTO(token));
     }

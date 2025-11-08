@@ -1,5 +1,6 @@
 package br.com.thiagosantos.cinerate.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -7,6 +8,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "avaliacao")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Avaliacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

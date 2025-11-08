@@ -3,6 +3,7 @@ package br.com.thiagosantos.cinerate.entities;
 import br.com.thiagosantos.cinerate.enums.TipoObraEnum;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "obra")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Obra {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -33,6 +33,7 @@
     <ng-template pTemplate="header">
       <tr>
         <th>Nome</th>
+        <th>Usuario que criou/atualizou</th>
         <th>Ações</th>
       </tr>
     </ng-template>
@@ -40,6 +41,7 @@
     <ng-template pTemplate="body" let-genero>
       <tr>
         <td>{{ genero.nome }}</td>
+        <td>{{ genero.nomeUsuarioCriador }}</td>
         <td>
           <p-button icon="pi pi-pencil" severity="danger" (click)="editarGenero(genero)"></p-button>
           <p-confirmdialog />

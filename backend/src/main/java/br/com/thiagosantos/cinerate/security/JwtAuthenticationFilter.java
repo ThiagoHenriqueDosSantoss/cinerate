@@ -1,5 +1,6 @@
 package br.com.thiagosantos.cinerate.security;
 
+import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -35,14 +36,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         String token = authHeader.substring(7);
-        String tokenValido = JwtUtil.validarToken(token);
+        Claims claims = JwtUtil.getClaims(token);
+        Long idUsuario = ((Number) claims.get("idUsuario")).longValue();
 
-        if (tokenValido == null) {
+
+        if (claims == null) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.getWriter().write("Token inválido");
             return;
         }
 
+        request.setAttribute("idUsuario", idUsuario);
         filterChain.doFilter(request, response);
     }
 }

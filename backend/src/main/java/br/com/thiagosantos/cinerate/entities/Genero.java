@@ -23,15 +23,19 @@ public class Genero {
     @JsonIgnore
     private List<Obra> obras;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idusuario", nullable = true)
+    private Usuario usuario;
 
     public Genero() {
 
     }
 
-    public Genero(Long idgenero, String nome, List<Obra> obras) {
+    public Genero(Long idgenero, String nome, List<Obra> obras, Usuario usuario) {
         this.idgenero = idgenero;
         this.nome = nome;
         this.obras = obras;
+        this.usuario = usuario;
     }
 
     public Long getIdgenero() {
@@ -56,5 +60,13 @@ public class Genero {
 
     public void setObras(List<Obra> obras) {
         this.obras = obras;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }

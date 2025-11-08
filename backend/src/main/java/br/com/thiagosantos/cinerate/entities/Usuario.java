@@ -2,6 +2,7 @@ package br.com.thiagosantos.cinerate.entities;
 
 import br.com.thiagosantos.cinerate.enums.UserRoles;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -17,6 +18,7 @@ import java.util.Set;
 @Getter
 @Setter
 @EqualsAndHashCode(of = "idusuario")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Usuario{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -9,10 +9,10 @@ import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { UsuarioService } from '../../service/usuario-service';
 import { Usuario } from '../../interface/Usuario';
-
+import { Select } from 'primeng/select';
 @Component({
   selector: 'app-usuario-component',
-  imports: [CommonModule,ButtonModule, TableModule, InputTextModule, DialogModule, FormsModule],
+  imports: [CommonModule,ButtonModule, TableModule, InputTextModule, DialogModule, FormsModule, Select],
   templateUrl: './usuario-component.html',
   styleUrl: './usuario-component.css',
 })
@@ -22,6 +22,11 @@ export class UsuarioComponent implements OnInit{
   novoUsuario: Usuario = { idUsuario: 0, nome: '', email: '' , senha: '' , dataDeCadastro: ''};
 
   usuarios: Usuario[] = [];
+
+  tiposCredencial = [
+    { label: 'ADMIN', value: 'USER' },
+    { label: 'USER', value: 'USER' },
+  ];
 
   constructor(private usuarioService: UsuarioService){}
 

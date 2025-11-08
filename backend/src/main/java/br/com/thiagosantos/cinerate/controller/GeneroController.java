@@ -1,7 +1,11 @@
 package br.com.thiagosantos.cinerate.controller;
 
+import br.com.thiagosantos.cinerate.dto.GeneroDTO;
 import br.com.thiagosantos.cinerate.entities.Genero;
+import br.com.thiagosantos.cinerate.entities.Usuario;
 import br.com.thiagosantos.cinerate.repository.GeneroRepository;
+import br.com.thiagosantos.cinerate.repository.UsuarioRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +20,19 @@ public class GeneroController {
     @Autowired
     GeneroRepository generoRepository;
 
+    @Autowired
+    UsuarioRepository usuarioRepository;
+
     // LISTAR TODOS
     @GetMapping("/listarGenero")
-    public ResponseEntity<List<Genero>> listar() {
-        return ResponseEntity.ok((List<Genero>) generoRepository.findAll());
+    public List<GeneroDTO> listar() {
+        return generoRepository.findAll().stream()
+                .map(g -> new GeneroDTO(
+                        g.getIdgenero(),
+                        g.getNome(),
+                        g.getUsuario() != null ? g.getUsuario().getNome() : null
+                ))
+                .toList();
     }
 
     // OBTER POR ID
@@ -32,9 +45,21 @@ public class GeneroController {
 
     // NOVO
     @PostMapping("/novoGenero")
-    public ResponseEntity<Genero> novo(@RequestBody Genero genero) {
-        genero.setIdgenero(null);
-        return ResponseEntity.ok(generoRepository.save(genero));
+    public ResponseEntity<?> novo(@RequestBody Genero genero, HttpServletRequest request) {
+
+        Long idUsuario = ((Number) request.getAttribute("idUsuario")).longValue();
+
+        if (idUsuario == null) {
+            return ResponseEntity.status(401).body("Usuário não identificado no token.");
+        }
+
+        Usuario usuario = usuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        genero.setUsuario(usuario);
+        generoRepository.save(genero);
+
+        return ResponseEntity.ok("Gênero cadastrado com sucesso!");
     }
 
     // REMOVER
@@ -50,13 +75,30 @@ public class GeneroController {
 
     // ATUALIZAR
     @PutMapping("/atualizarGenero/{idgenero}")
-    public ResponseEntity<Genero> atualizar(@PathVariable("idgenero") Long id,
-                                            @RequestBody Genero novoGenero) {
-        Optional<Genero> object = generoRepository.findById(id);
-        if (object.isPresent()) {
-            novoGenero.setIdgenero(id); // garante que o ID do objeto atualizado seja o mesmo
-            return ResponseEntity.ok(generoRepository.save(novoGenero));
+    public ResponseEntity<?> atualizar(@PathVariable("idgenero") Long id,
+                                       @RequestBody Genero novoGenero,
+                                       HttpServletRequest request) {
+
+        Long idUsuario = ((Number) request.getAttribute("idUsuario")).longValue();
+
+        if (idUsuario == null) {
+            return ResponseEntity.status(401).body("Usuário não identificado no token.");
         }
-        return ResponseEntity.notFound().build();
+
+        Usuario usuario = usuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        Optional<Genero> generoExistente = generoRepository.findById(id);
+
+        if (generoExistente.isPresent()) {
+            novoGenero.setIdgenero(id);
+            novoGenero.setUsuario(usuario);
+
+            generoRepository.save(novoGenero);
+
+            return ResponseEntity.ok("Gênero atualizado com sucesso!");
+        }
+
+        return ResponseEntity.status(404).body("Gênero não encontrado");
     }
 }
