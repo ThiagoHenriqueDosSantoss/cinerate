@@ -20,9 +20,7 @@ public class ObraController {
 
     // LISTAR TODOS
     @GetMapping("/listarObra")
-    public ResponseEntity<List<Obra>> listar() {
-        return ResponseEntity.ok((List<Obra>) obraRepository.findAll());
-    }
+    public ResponseEntity<List<Obra>> listar() { return ResponseEntity.ok((List<Obra>) obraRepository.findAll()); }
 
     // OBTER POR ID
     @GetMapping("/listarObra/{idobra}")

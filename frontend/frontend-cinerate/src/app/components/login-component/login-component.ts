@@ -34,12 +34,15 @@ export class LoginComponent {
 
    login() {
     this.loginService.login(this.loginUsuario).subscribe({
-      next: () => {
-        console.log('✅ Login bem-sucedido');
+      next: (res) => {
+        if(res.token){
+          localStorage.setItem('token',res.token)
+        }
         this.router.navigate(['/home']);
+        console.log(res.token);
       },
       error: (err) => {
-        console.error('❌ Erro no login', err);
+        console.error(err);
         alert(err.error?.mensagem || 'Usuário ou senha incorretos');
       }
     });

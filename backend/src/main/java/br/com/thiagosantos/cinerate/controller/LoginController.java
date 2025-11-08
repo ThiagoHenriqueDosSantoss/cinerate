@@ -5,6 +5,7 @@ import br.com.thiagosantos.cinerate.entities.Login;
 import br.com.thiagosantos.cinerate.entities.Usuario;
 import br.com.thiagosantos.cinerate.repository.UsuarioRepository;
 import br.com.thiagosantos.cinerate.security.CriptografiaUtil;
+import br.com.thiagosantos.cinerate.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,15 +27,14 @@ public class LoginController {
     @PostMapping
     public ResponseEntity<?> login(@RequestBody Login login) {
         Optional<Usuario> usuarioOpt = usuarioRepository.findByNome(login.getNome());
-        if (usuarioOpt.isEmpty()) {
-            return ResponseEntity.status(401)
-                    .body(Map.of("success", false, "mensagem", "Usuário não encontrado"));
+
+        if (usuarioOpt.isEmpty() || !login.getSenha().equals(usuarioOpt.get().getSenha())) {
+            return ResponseEntity.status(401).body("Usuário ou senha incorreta");
         }
+
         Usuario usuario = usuarioOpt.get();
-        if (!CriptografiaUtil.verificarSenha(login.getSenha(), usuario.getSenha())) {
-            return ResponseEntity.status(401)
-                    .body(Map.of("success", false, "mensagem", "Usuario ou senha incorreta"));
-        }
-        return ResponseEntity.ok().build();
+        String token = JwtUtil.gerarToken(usuario.getNome());
+
+        return ResponseEntity.ok(new LoginResponseDTO(token));
     }
 }

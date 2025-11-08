@@ -19,8 +19,7 @@ public class UsuarioService {
     public Usuario criarUsuario(Usuario usuario){
         Usuario u = new Usuario();
         u.setNome(usuario.getNome());
-        String senhaHash = CriptografiaUtil.gerarHash(usuario.getSenha());
-        u.setSenha(senhaHash);
+        u.setSenha(usuario.getSenha());
         u.setEmail(usuario.getEmail());
         u.setDataDeCadastro(LocalDateTime.now());
         u.setCredencial(usuario.getCredencial());
@@ -39,8 +38,7 @@ public class UsuarioService {
         }
 
         if (usuario.getSenha() != null){
-            String senhaHash = CriptografiaUtil.gerarHash(usuario.getSenha());
-            u.setSenha(senhaHash);
+            u.setSenha(usuario.getSenha());
         }
 
         if(usuario.getEmail() != null){
