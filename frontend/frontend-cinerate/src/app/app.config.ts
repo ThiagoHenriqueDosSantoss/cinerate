@@ -7,7 +7,8 @@ import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeuix/themes/aura';
 import { provideNoopAnimations } from '@angular/platform-browser/animations';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './components/auth-interceptor/auth-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -25,6 +26,10 @@ export const appConfig: ApplicationConfig = {
         }),
         provideAnimationsAsync(),
         provideNoopAnimations(),
-        provideHttpClient()
+        provideHttpClient(
+          withInterceptors([
+            authInterceptor
+        ])
+        )
   ]
 };

@@ -12,7 +12,6 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/genero")
-@CrossOrigin(origins = "http://localhost:4200", methods = {RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.POST})
 public class GeneroController {
     @Autowired
     GeneroRepository generoRepository;
