@@ -74,7 +74,9 @@ export class GeneroComponent implements OnInit {
   buscarGenero(){
     this.generoService.buscarGeneros().subscribe({
       next: (genero: Genero[]) => {
-        this.generos = genero;
+        setTimeout(() => {
+          this.generos = genero;
+        },500);
       }
     })
   }

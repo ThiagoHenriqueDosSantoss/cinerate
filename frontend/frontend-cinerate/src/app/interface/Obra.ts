@@ -9,4 +9,5 @@ export interface Obra {
   tipoobra: TipoObra;         // tipo da obra
   imagemUrl?: string;             // URL da imagem (opcional)
   genero:Genero;
+  nome?: string;
 }

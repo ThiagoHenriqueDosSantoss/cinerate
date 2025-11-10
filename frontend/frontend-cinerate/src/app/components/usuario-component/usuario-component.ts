@@ -72,7 +72,9 @@ export class UsuarioComponent implements OnInit{
   buscarUsuarios() {
     this.usuarioService.buscarUsuarios().subscribe({
       next: (usuarios: Usuario[]) => {
-        this.usuarios = usuarios;
+        setTimeout(() => {
+          this.usuarios = usuarios;
+        },1000);
       },
       error: (err) => {
         console.error('Erro ao buscar usuários', err);

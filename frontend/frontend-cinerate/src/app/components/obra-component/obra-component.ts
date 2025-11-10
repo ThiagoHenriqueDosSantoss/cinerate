@@ -47,6 +47,7 @@ export class ObraComponent implements OnInit {
 
   ngOnInit(): void {
     this.buscarObras();
+    this.cd.detectChanges(); 
   }
 
   criarObraVazia(): Obra {
@@ -67,8 +68,11 @@ export class ObraComponent implements OnInit {
   buscarObras() {
     this.obraService.buscarObras().subscribe({
       next: (obras: Obra[]) => {
-        this.obras = obras;
-        this.cd.detectChanges(); // força Angular a atualizar a view
+        setTimeout(() => {
+          this.obras = obras;
+            console.log(obras);
+        },500);
+        
       },
       error: (err) => {
         console.error('Erro ao buscar obras', err);
@@ -175,8 +179,9 @@ export class ObraComponent implements OnInit {
   buscarGeneros(){
     this.obraService.buscarGeneros().subscribe({
       next: (genero: Genero[]) => {
-        console.log(genero);
-        this.generos = genero;
+        setTimeout(() => {
+          this.generos = genero;
+        },500);
       }
     });
   }

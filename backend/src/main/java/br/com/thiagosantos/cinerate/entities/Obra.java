@@ -34,7 +34,6 @@ public class Obra {
     private String imagemUrl;
 
     @ManyToOne
-    @JsonIgnore
     private Usuario usuario;
 
     @ManyToOne
@@ -44,7 +43,7 @@ public class Obra {
 
     }
 
-    public Obra(Long idobra, String titulo, String descricao, Integer anoLancamento, TipoObraEnum tipoobra, String imagemUrl,Genero genero) {
+    public Obra(Long idobra, String titulo, String descricao, Integer anoLancamento, TipoObraEnum tipoobra, String imagemUrl,Genero genero, Usuario usuario) {
         this.idobra = idobra;
         this.titulo = titulo;
         this.descricao = descricao;
@@ -52,6 +51,7 @@ public class Obra {
         this.tipoobra = tipoobra;
         this.imagemUrl = imagemUrl;
         this.genero = genero;
+        this.usuario = usuario;
     }
 
     public Long getIdObra() {

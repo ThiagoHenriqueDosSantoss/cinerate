@@ -1,7 +1,10 @@
 package br.com.thiagosantos.cinerate.controller;
 
 import br.com.thiagosantos.cinerate.entities.Obra;
+import br.com.thiagosantos.cinerate.entities.Usuario;
 import br.com.thiagosantos.cinerate.repository.ObraRepository;
+import br.com.thiagosantos.cinerate.repository.UsuarioRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,9 @@ public class ObraController {
     @Autowired
     ObraRepository obraRepository;
 
+    @Autowired
+    UsuarioRepository usuarioRepository;
+
     // LISTAR TODOS
     @GetMapping("/listarObra")
     public ResponseEntity<List<Obra>> listar() { return ResponseEntity.ok((List<Obra>) obraRepository.findAll()); }
@@ -31,8 +37,19 @@ public class ObraController {
 
     // NOVO
     @PostMapping("/novaObra")
-    public ResponseEntity<Obra> novo(@RequestBody Obra obra) {
+    public ResponseEntity<String> novo(@RequestBody Obra obra, HttpServletRequest request) {
+        Long idUsuario = ((Number) request.getAttribute("idUsuario")).longValue();
+
+        if (idUsuario == null) {
+            return ResponseEntity.status(401).body("Usuário não identificado no token.");
+        }
+
+        Usuario usuario = usuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
         obra.setIdObra(null);
+        obra.setUsuarios(usuario);
+
         Obra o = new Obra(
                 obra.getIdObra(),
                 obra.getTitulo(),
@@ -40,10 +57,11 @@ public class ObraController {
                 obra.getAnoLancamento(),
                 obra.getTipoobra(),
                 obra.getImagemUrl(),
-                obra.getGenero()
+                obra.getGenero(),
+                obra.getUsuarios()
         );
-
-        return ResponseEntity.ok(obraRepository.save(obra));
+        obraRepository.save(obra);
+        return ResponseEntity.ok("OK");
     }
 
     // REMOVER
@@ -59,13 +77,23 @@ public class ObraController {
 
     // ATUALIZAR
     @PutMapping("/atualizarObra/{idobra}")
-    public ResponseEntity<Obra> atualizar(@PathVariable("idobra") Long id,
-                                          @RequestBody Obra novoObra) {
+    public ResponseEntity<String> atualizar(@PathVariable("idobra") Long id,
+                                          @RequestBody Obra novoObra, HttpServletRequest request) {
+        Long idUsuario = ((Number) request.getAttribute("idUsuario")).longValue();
+
+        if (idUsuario == null) {
+            return ResponseEntity.status(401).body("Usuário não identificado no token.");
+        }
+
+        Usuario usuario = usuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
         Optional<Obra> object = obraRepository.findById(id);
         if (object.isPresent()) {
             // garante que o ID do objeto atualizado seja o mesmo
             novoObra.setIdObra(id);
-            return ResponseEntity.ok(obraRepository.save(novoObra));
+            obraRepository.save(novoObra);
+            return ResponseEntity.ok("OK");
         }
         return ResponseEntity.notFound().build();
     }

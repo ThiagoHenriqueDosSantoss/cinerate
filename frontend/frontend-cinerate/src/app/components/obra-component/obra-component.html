@@ -80,6 +80,7 @@
         <th>Tipo</th>
         <th>Imagem</th>
         <th>Gênero</th>
+        <th>Usuario que criou/atualizou</th>
         <th>Ações</th>
       </tr>
     </ng-template>
@@ -91,6 +92,7 @@
         <td>{{ obra.tipoobra }}</td>
         <td>{{ obra.imagemUrl }}</td>
         <td>{{ obra.genero?.nome }}</td>
+        <td>{{ obra.usuarios?.nome }}</td>
         <td>
           <img *ngIf="obra.imagemUrl" [src]="obra.imagemUrl" alt="Imagem da Obra" width="50">
         </td>
