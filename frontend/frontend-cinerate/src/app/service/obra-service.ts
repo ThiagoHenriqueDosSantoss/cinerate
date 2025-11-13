@@ -15,10 +15,11 @@ export class ObraService {
     const url = `${this.baseUrl}/api/obra/novaObra`;
     return this.http.post<Obra>(url, novaObra);
   }
-  public buscarObras():Observable<any>{
+  public buscarObras(): Observable<Obra[]> {
     const url = `${this.baseUrl}/api/obra/listarObra`;
-    return this.http.get(url);
+    return this.http.get<Obra[]>(url);
   }
+
   public buscarObrasPorID(idobra:number):Observable<Obra>{
     const url = `${this.baseUrl}/api/obra/listarObra/${idobra}`;
     return this.http.get<Obra>(url);

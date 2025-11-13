@@ -57,9 +57,9 @@ public class GeneroController {
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
 
         genero.setUsuario(usuario);
-        generoRepository.save(genero);
+        Genero response = generoRepository.save(genero);
 
-        return ResponseEntity.ok("Gênero cadastrado com sucesso!");
+        return ResponseEntity.ok(response);
     }
 
     // REMOVER
@@ -94,9 +94,9 @@ public class GeneroController {
             novoGenero.setIdgenero(id);
             novoGenero.setUsuario(usuario);
 
-            generoRepository.save(novoGenero);
+            Genero response = generoRepository.save(novoGenero);
 
-            return ResponseEntity.ok("Gênero atualizado com sucesso!");
+            return ResponseEntity.ok(response);
         }
 
         return ResponseEntity.status(404).body("Gênero não encontrado");

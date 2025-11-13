@@ -6,5 +6,5 @@ export interface Usuario {
   email: string;
   senha:string;
   dataDeCadastro: string;
-  credencial?: Credencial;
+  credencial: Credencial;
 }

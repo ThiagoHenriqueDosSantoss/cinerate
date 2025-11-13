@@ -62,12 +62,12 @@
         <th>Ações</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-usuario *ngIf="usuarios.length > 0">
+    <ng-template pTemplate="body" let-usuario>
       <tr>
         <td>{{ usuario.nome }}</td>
         <td>{{ usuario.email }}</td>
         <td>{{ usuario.senha }}</td>
-        <td>{{ usuario.credencial }}</td>
+        <td>{{ usuario?.credencial || 'Sem credencial' }}</td>
         <td>
           <p-button icon="pi pi-pencil" (onClick)="onEdit(usuario)"></p-button>
         </td>

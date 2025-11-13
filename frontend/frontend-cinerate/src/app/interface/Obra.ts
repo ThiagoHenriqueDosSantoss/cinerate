@@ -1,5 +1,6 @@
 import { TipoObra } from "../enum/TipoObra";
 import { Genero } from "./Genero";
+import { Usuario } from "./Usuario";
 
 export interface Obra {
   idObra: number | any;                 // id da obra
@@ -9,5 +10,5 @@ export interface Obra {
   tipoobra: TipoObra;         // tipo da obra
   imagemUrl?: string;             // URL da imagem (opcional)
   genero:Genero;
-  nome?: string;
+  usuarios?: Usuario;
 }

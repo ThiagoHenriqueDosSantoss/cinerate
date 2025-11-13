@@ -10,6 +10,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { UsuarioService } from '../../service/usuario-service';
 import { Usuario } from '../../interface/Usuario';
 import { Select } from 'primeng/select';
+import { Credencial } from '../../enum/Credencial';
 @Component({
   selector: 'app-usuario-component',
   imports: [CommonModule,ButtonModule, TableModule, InputTextModule, DialogModule, FormsModule, Select],
@@ -19,7 +20,7 @@ import { Select } from 'primeng/select';
 export class UsuarioComponent implements OnInit{
   displayModal = false;
 
-  novoUsuario: Usuario = { idUsuario: 0, nome: '', email: '' , senha: '' , dataDeCadastro: ''};
+  novoUsuario: Usuario = { idUsuario: 0, nome: '', email: '' , senha: '' , dataDeCadastro: '', credencial: Credencial.ADMIN};
 
   usuarios: Usuario[] = [];
 
@@ -74,6 +75,7 @@ export class UsuarioComponent implements OnInit{
       next: (usuarios: Usuario[]) => {
         setTimeout(() => {
           this.usuarios = usuarios;
+          console.log(usuarios)
         },1000);
       },
       error: (err) => {
@@ -94,7 +96,7 @@ export class UsuarioComponent implements OnInit{
     });
   }
   resetarFormulario() {
-    this.novoUsuario = { idUsuario: 0, nome: '', email: '', senha: '' , dataDeCadastro: ''};
+    this.novoUsuario = { idUsuario: 0, nome: '', email: '', senha: '' , dataDeCadastro: '', credencial: Credencial.ADMIN};
   }
   onEdit(usuario: Usuario) {
     if (!usuario.idUsuario) {

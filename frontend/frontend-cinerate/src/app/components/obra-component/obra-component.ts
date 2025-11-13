@@ -47,7 +47,6 @@ export class ObraComponent implements OnInit {
 
   ngOnInit(): void {
     this.buscarObras();
-    this.cd.detectChanges(); 
   }
 
   criarObraVazia(): Obra {
@@ -68,11 +67,8 @@ export class ObraComponent implements OnInit {
   buscarObras() {
     this.obraService.buscarObras().subscribe({
       next: (obras: Obra[]) => {
-        setTimeout(() => {
           this.obras = obras;
-            console.log(obras);
-        },500);
-        
+          console.log(this.obras);
       },
       error: (err) => {
         console.error('Erro ao buscar obras', err);
@@ -131,7 +127,6 @@ export class ObraComponent implements OnInit {
         this.novaObra = res;
         this.displayModal = true;
         this.buscarGeneros();
-        this.cd.detectChanges();
       },
       error: () => {
         this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao buscar obra' });
@@ -147,7 +142,6 @@ export class ObraComponent implements OnInit {
     }
     this.obraSelecionadaExclusao = {... obra }
     this.confirm2(event);
-    this.cd.detectChanges();
   }
 
   confirm2(event: Event) {
@@ -164,7 +158,6 @@ export class ObraComponent implements OnInit {
           next: () => {
             this.messageService.add({ severity: 'success', summary: 'Deleted', detail: 'Obra excluída com sucesso' });
             this.buscarObras();
-            this.cd.detectChanges();
           },
           error: () => {
             this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao excluir obra' });
