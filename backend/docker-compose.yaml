@@ -1,0 +1,13 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: cinerate
+    ports:
+      - "5436:5437"
+    volumes:
+      - ./data:/var/lib/postgres/data
