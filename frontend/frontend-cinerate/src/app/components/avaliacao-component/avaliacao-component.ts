@@ -11,16 +11,17 @@ import { RatingModule } from 'primeng/rating';
 import { Avaliacao } from '../../interface/Avaliacao';
 import { CriarAvaliacao } from '../../interface/CriarAvaliacao';
 import { AvaliacaoService } from '../../service/avaliacao-service';
+import { ScrollerModule } from 'primeng/scroller';
 
 @Component({
   selector: 'app-avaliacao-component',
   standalone: true,
-  imports: [FormsModule,CommonModule,CardModule,ButtonModule, DialogModule,RatingModule],
+  imports: [FormsModule,CommonModule,CardModule,ButtonModule, DialogModule,RatingModule,ScrollerModule],
   templateUrl: './avaliacao-component.html',
   styleUrl: './avaliacao-component.css',
 })
 export class AvaliacaoComponent implements OnInit{
-  
+  items!: string[];
   visible: boolean = false;
   obras: Obra[] = [];
 
@@ -28,7 +29,9 @@ export class AvaliacaoComponent implements OnInit{
     nota: 0,
     comentario: '',
     idUsuario: 0,
-    idObra: 0
+    obra: {
+      idobra: 0
+    }
   };
   obraSelecionada: Obra | null = null;
 
@@ -37,14 +40,17 @@ export class AvaliacaoComponent implements OnInit{
   ngOnInit(): void {
       this.visible;
       this.buscarObras();
+      this.items = Array.from({ length: 1000 }).map((_, i) => `Item #${i}`);
   }
   abrirModalAvaliacao(obra:Obra){
     this.obraSelecionada = obra;
       this.novaAvaliacao = {
       nota: 0,
       comentario: '',
-      idUsuario: undefined, // Pegar do usuário logado
-      idObra: obra.idObra
+      idUsuario: undefined,
+      obra: {
+        idobra: obra.idObra
+      }
     };
     console.log('Nova avaliação configurada:', this.novaAvaliacao);
     this.visible = true;
@@ -61,12 +67,14 @@ export class AvaliacaoComponent implements OnInit{
     });
   }
   salvarAvaliacao() {
-
+    if(this.novaAvaliacao.obra.idobra == undefined){
+      console.error('Sem referencia para obra');
+    }
     if (!this.novaAvaliacao.nota || !this.novaAvaliacao.comentario) {
       console.error('Preencha todos os campos!');
       return;
     }
-
+    console.log("Avaliação para salvar: ", this.novaAvaliacao);
     this.avaliacaoService.criarAvaliacao(this.novaAvaliacao).subscribe({
       next: (response) => {
         console.log('Avaliação salva:', response);

@@ -1,7 +1,12 @@
 package br.com.thiagosantos.cinerate.controller;
 
 import br.com.thiagosantos.cinerate.entities.Avaliacao;
+import br.com.thiagosantos.cinerate.entities.Obra;
+import br.com.thiagosantos.cinerate.entities.Usuario;
 import br.com.thiagosantos.cinerate.repository.AvaliacaoRepository;
+import br.com.thiagosantos.cinerate.repository.ObraRepository;
+import br.com.thiagosantos.cinerate.repository.UsuarioRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +20,12 @@ import java.util.Optional;
 public class AvaliacaoController {
     @Autowired
     AvaliacaoRepository avalicaoRepository;
+
+    @Autowired
+    UsuarioRepository usuarioRepository;
+
+    @Autowired
+    ObraRepository obraRepository;
 
     // LISTAR TODOS
     @GetMapping("/listarAvaliacao")
@@ -32,7 +43,21 @@ public class AvaliacaoController {
 
     // NOVO
     @PostMapping("/novaAvaliacao")
-    public ResponseEntity<Avaliacao> novo(@RequestBody Avaliacao avaliacao) {
+    public ResponseEntity<Avaliacao> novo(@RequestBody Avaliacao avaliacao, HttpServletRequest request) {
+        Long idUsuario = ((Number) request.getAttribute("idUsuario")).longValue();
+
+        if (idUsuario == null) {
+            return ResponseEntity.status(401).build();
+        }
+
+        Usuario usuario = usuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        avaliacao.setUsuario(usuario);
+
+        Obra obra = obraRepository.findById(avaliacao.getObra().getIdObra())
+                .orElseThrow(() -> new RuntimeException("Obra não encontrada"));
+
+        avaliacao.setObra(obra);
         return ResponseEntity.ok(avalicaoRepository.save(avaliacao));
     }
 
