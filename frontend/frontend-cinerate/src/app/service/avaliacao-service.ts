@@ -15,4 +15,8 @@ export class AvaliacaoService {
     const url = `${this.baseUrl}/api/avaliacao/novaAvaliacao`;
     return this.http.post<CriarAvaliacao>(url,avaliacao);
   }
+  buscarAvaliacao():Observable<any>{
+    const url = `${this.baseUrl}/api/avaliacao/listarAvaliacao`;
+    return this.http.get(url);
+  }
 }

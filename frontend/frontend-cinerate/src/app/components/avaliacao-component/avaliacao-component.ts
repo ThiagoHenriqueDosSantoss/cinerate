@@ -21,7 +21,7 @@ import { ScrollerModule } from 'primeng/scroller';
   styleUrl: './avaliacao-component.css',
 })
 export class AvaliacaoComponent implements OnInit{
-  items!: string[];
+  items!: Avaliacao[];
   visible: boolean = false;
   obras: Obra[] = [];
 
@@ -40,7 +40,7 @@ export class AvaliacaoComponent implements OnInit{
   ngOnInit(): void {
       this.visible;
       this.buscarObras();
-      this.items = Array.from({ length: 1000 }).map((_, i) => `Item #${i}`);
+      this.buscarAvaliacao();
   }
   abrirModalAvaliacao(obra:Obra){
     this.obraSelecionada = obra;
@@ -96,5 +96,13 @@ export class AvaliacaoComponent implements OnInit{
   fecharModal() {
     this.visible = false;
     this.obraSelecionada = null;
+  }
+  buscarAvaliacao(){
+    this.avaliacaoService.buscarAvaliacao().subscribe({
+      next: (res : Avaliacao[]) => {
+        this.items = res;
+        console.log(res);
+      }
+    })
   }
 }

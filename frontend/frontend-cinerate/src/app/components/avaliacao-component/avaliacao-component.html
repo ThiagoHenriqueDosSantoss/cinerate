@@ -49,14 +49,38 @@
                 </ng-template>
                 <ng-template #subtitle> 
                     <div class="text-sm text-color-secondary line-height-3">
-                        {{obra.descricao}}
+                        Descricao do filme: {{obra.descricao}}
                     </div>
+                    <hr>
                 </ng-template>
-                <div class="card flex justify-center">
-                  <p-virtualscroller [items]="items" [itemSize]="50" scrollHeight="200px" styleClass="border border-surface" [style]="{ width: '200px', height: '200px' }">
+                <div class="flex justify-center mt-0 p-0 scroller-container">
+                  <p-virtualscroller [items]="items" [itemSize]="150" scrollHeight="200px" styleClass="border border-surface" [style]="{ width: '270px', height: '200px' }">
                       <ng-template #item let-item let-options="options">
-                          <div class="flex items-center p-2" [ngClass]="{ 'bg-surface-100 dark:bg-surface-700': options.odd }" style="height: 50px;">
-                              <span class="pi pi-user"> {{ item }}</span> 
+                          <div class="flex items-center p-0" [ngClass]="{ 'bg-surface-100 dark:bg-surface-700': options.odd }" style="height: 120px;">
+                            <p-card class="avaliacao-card">
+                              <div class="avaliacao-header">
+                                <i class="pi pi-user"></i>
+                                <span>{{ item.usuario?.nome }}</span>
+                              </div>
+                              <div class="avaliacao-comentario">
+                                <span class="comentario-texto">{{ item.comentario }}</span>
+
+                                <div class="comentario-botoes">
+                                  <button>1</button>
+                                  <button>2</button>
+                                </div>
+                              </div>
+                              <div>
+                                  <p-rating 
+                                    [readonly]="true"
+                                    [stars]="5"
+                                    id="nota">
+                                  </p-rating>
+                                  <small class="text-color-secondary">
+                                    {{ item.nota + ' de 5 estrelas'}}
+                                  </small>
+                              </div>
+                            </p-card>
                           </div>
                       </ng-template>
                   </p-virtualscroller>
